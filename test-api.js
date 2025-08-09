@@ -1,7 +1,7 @@
 // Script de test pour l'API FXEMPEROR & RUGA
 // Utilisez ce script pour tester votre API après déploiement
 
-const API_BASE_URL = 'https://votre-site.netlify.app'; // Remplacez par votre URL Netlify
+const API_BASE_URL = 'https://fxe.netlify.app'; // URL de votre site Netlify
 
 // Test de la route de test
 async function testAPI() {

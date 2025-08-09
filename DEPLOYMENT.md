@@ -34,8 +34,8 @@ Les fonctions Netlify sont dans le dossier `netlify/functions/` et gèrent :
 
 ### Nouveau serveur Netlify
 - **Port** : Automatique (80/443)
-- **URL de production** : `https://votre-site.netlify.app`
-- **API de test** : `https://votre-site.netlify.app/api/test`
+- **URL de production** : `https://fxe.netlify.app`
+- **API de test** : `https://fxe.netlify.app/api/test`
 
 ### Changements dans le code
 - Les routes `/api/*` sont maintenant gérées par Netlify Functions
@@ -89,8 +89,8 @@ fxe-tsotre/
 
 Après le déploiement, vérifiez :
 
-1. **Site principal** : `https://votre-site.netlify.app`
-2. **API de test** : `https://votre-site.netlify.app/api/test`
+1. **Site principal** : `https://fxe.netlify.app`
+2. **API de test** : `https://fxe.netlify.app/api/test`
 3. **Routes API disponibles** :
    - `GET /api/test` - Test de l'API
    - `POST /api/confirm-offer` - Confirmation d'offre
