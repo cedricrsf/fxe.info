@@ -33,6 +33,21 @@ exports.handler = async (event, context) => {
         const { path } = event;
         const body = JSON.parse(event.body || '{}');
 
+        // Route de test pour vérifier que l'API fonctionne
+        if (path === '/api/test' && event.httpMethod === 'GET') {
+            return {
+                statusCode: 200,
+                headers,
+                body: JSON.stringify({
+                    success: true,
+                    message: '🚀 API FXEMPEROR & RUGA fonctionne parfaitement !',
+                    timestamp: new Date().toISOString(),
+                    environment: 'Netlify Functions',
+                    version: '1.0.0'
+                })
+            };
+        }
+
         // Route pour capturer les informations de confirmation d'offre
         if (path === '/api/confirm-offer' && event.httpMethod === 'POST') {
             const { email, telegram, offerName, offerPrice } = body;
@@ -160,13 +175,56 @@ exports.handler = async (event, context) => {
             };
         }
 
+        // Route pour obtenir le statut d'une soumission
+        if (path === '/api/submission-status' && event.httpMethod === 'GET') {
+            const { submissionId } = event.queryStringParameters || {};
+            
+            if (!submissionId) {
+                return {
+                    statusCode: 400,
+                    headers,
+                    body: JSON.stringify({
+                        success: false,
+                        message: 'ID de soumission requis'
+                    })
+                };
+            }
+
+            const submission = submissions.find(s => s.id === submissionId);
+            if (!submission) {
+                return {
+                    statusCode: 404,
+                    headers,
+                    body: JSON.stringify({
+                        success: false,
+                        message: 'Soumission non trouvée'
+                    })
+                };
+            }
+
+            return {
+                statusCode: 200,
+                headers,
+                body: JSON.stringify({
+                    success: true,
+                    submission: submission
+                })
+            };
+        }
+
         // Route par défaut
         return {
             statusCode: 404,
             headers,
             body: JSON.stringify({
                 success: false,
-                message: 'Route non trouvée'
+                message: 'Route non trouvée',
+                availableRoutes: [
+                    'GET /api/test',
+                    'POST /api/confirm-offer',
+                    'POST /api/process-payment',
+                    'GET /api/submission-status'
+                ]
             })
         };
 

@@ -25,6 +25,23 @@ Les fonctions Netlify sont dans le dossier `netlify/functions/` et gèrent :
 - Confirmation d'offre (`/api/confirm-offer`)
 - Traitement de paiement (`/api/process-payment`)
 
+## 🔄 Migration du serveur local vers Netlify
+
+### Ancien serveur local (server.js)
+- **Port** : 3000
+- **URL locale** : `http://localhost:3000`
+- **API de test** : `http://localhost:3000/api/test`
+
+### Nouveau serveur Netlify
+- **Port** : Automatique (80/443)
+- **URL de production** : `https://votre-site.netlify.app`
+- **API de test** : `https://votre-site.netlify.app/api/test`
+
+### Changements dans le code
+- Les routes `/api/*` sont maintenant gérées par Netlify Functions
+- Le serveur Express (`server.js`) n'est plus nécessaire en production
+- Les variables d'environnement sont configurées dans le dashboard Netlify
+
 ## 🚀 Déploiement
 
 ### Option 1 : Déploiement automatique via GitHub
@@ -73,11 +90,17 @@ fxe-tsotre/
 Après le déploiement, vérifiez :
 
 1. **Site principal** : `https://votre-site.netlify.app`
-2. **API** : `https://votre-site.netlify.app/.netlify/functions/api/confirm-offer`
-3. **Fonctionnalités** :
+2. **API de test** : `https://votre-site.netlify.app/api/test`
+3. **Routes API disponibles** :
+   - `GET /api/test` - Test de l'API
+   - `POST /api/confirm-offer` - Confirmation d'offre
+   - `POST /api/process-payment` - Traitement de paiement
+   - `GET /api/submission-status` - Statut d'une soumission
+4. **Fonctionnalités** :
    - Formulaire de confirmation d'offre
    - Traitement des paiements
    - Envoi d'emails
+   - Gestion des soumissions
 
 ## 🐛 Dépannage
 
