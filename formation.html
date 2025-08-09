@@ -1191,9 +1191,9 @@
                 // Afficher un message de succès
                 showNotification('Offre confirmée avec succès! Redirection vers la page de paiement...', 'success');
                 
-                // Rediriger vers paiement.html après un délai
+                // Rediriger vers paiement après un délai
                 setTimeout(() => {
-                    window.location.href = 'paiement.html';
+                    window.location.href = '/paiement';
                 }, 2000);
 
             } catch (error) {

@@ -10,6 +10,23 @@
   to = "/.netlify/functions/api"
   status = 200
 
+# Routes propres pour masquer les extensions .html
+[[redirects]]
+  from = "/formation"
+  to = "/formation.html"
+  status = 200
+
+[[redirects]]
+  from = "/paiement"
+  to = "/paiement.html"
+  status = 200
+
+[[redirects]]
+  from = "/responsive-demo"
+  to = "/responsive-demo.html"
+  status = 200
+
+# Redirection par défaut
 [[redirects]]
   from = "/*"
   to = "/index.html"
