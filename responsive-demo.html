@@ -84,7 +84,7 @@
     </div>
     
     <!-- Navigation mobile responsive -->
-    <div id="mobile-nav-placeholder"></div>
+    
     
     <!-- Contenu principal -->
     <div class="container mx-auto px-4 py-8">
@@ -244,54 +244,11 @@
             document.getElementById('device-indicator').textContent = device;
         }
         
-        // Charger la navigation mobile
-        async function loadMobileNav() {
-            try {
-                const response = await fetch('mobile-nav.html');
-                const html = await response.text();
-                document.getElementById('mobile-nav-placeholder').innerHTML = html;
-                initMobileNav();
-            } catch (error) {
-                console.log('Navigation mobile chargée');
-            }
-        }
-        
-        // Initialiser la navigation mobile
-        function initMobileNav() {
-            const hamburger = document.querySelector('.hamburger');
-            const navMenu = document.querySelector('.nav-menu');
-            const navClose = document.querySelector('.nav-close');
-            
-            if (hamburger && navMenu) {
-                hamburger.addEventListener('click', () => {
-                    hamburger.classList.toggle('active');
-                    navMenu.classList.toggle('active');
-                    document.body.style.overflow = navMenu.classList.contains('active') ? 'hidden' : 'auto';
-                });
-                
-                if (navClose) {
-                    navClose.addEventListener('click', () => {
-                        hamburger.classList.remove('active');
-                        navMenu.classList.remove('active');
-                        document.body.style.overflow = 'auto';
-                    });
-                }
-                
-                const navLinks = navMenu.querySelectorAll('.nav-link');
-                navLinks.forEach(link => {
-                    link.addEventListener('click', () => {
-                        hamburger.classList.remove('active');
-                        navMenu.classList.remove('active');
-                        document.body.style.overflow = 'auto';
-                    });
-                });
-            }
-        }
+
         
         // Initialisation
         document.addEventListener('DOMContentLoaded', () => {
             detectDevice();
-            loadMobileNav();
             
             // Observer les animations
             const observer = new IntersectionObserver((entries) => {

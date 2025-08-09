@@ -385,7 +385,7 @@
     </div>
 
     <!-- Navigation mobile responsive -->
-    <div id="mobile-nav-placeholder"></div>
+    
     
     <!-- Conteneur pour la lumière orange éclatante -->
     <div id="glowing-light-container">
@@ -850,9 +850,7 @@
         // Fonction pour charger la navigation mobile
         async function loadMobileNav() {
             try {
-                const response = await fetch('mobile-nav.html');
-                const html = await response.text();
-                document.getElementById('mobile-nav-placeholder').innerHTML = html;
+
                 
                 // Initialiser la navigation mobile
                 initMobileNav();

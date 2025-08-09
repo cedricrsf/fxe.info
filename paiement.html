@@ -746,59 +746,6 @@
     <!-- Script responsive pour tous les appareils -->
     <script src="responsive.js"></script>
     
-    <!-- Navigation mobile responsive -->
-    <script>
-        // Charger la navigation mobile
-        async function loadMobileNav() {
-            try {
-                const response = await fetch('mobile-nav.html');
-                const html = await response.text();
-                
-                // Insérer la navigation mobile au début du body
-                document.body.insertAdjacentHTML('afterbegin', html);
-                
-                // Initialiser la navigation mobile
-                initMobileNav();
-            } catch (error) {
-                console.log('Navigation mobile chargée avec succès');
-            }
-        }
-        
-        // Initialiser la navigation mobile
-        function initMobileNav() {
-            const hamburger = document.querySelector('.hamburger');
-            const navMenu = document.querySelector('.nav-menu');
-            const navClose = document.querySelector('.nav-close');
-            
-            if (hamburger && navMenu) {
-                hamburger.addEventListener('click', () => {
-                    hamburger.classList.toggle('active');
-                    navMenu.classList.toggle('active');
-                    document.body.style.overflow = navMenu.classList.contains('active') ? 'hidden' : 'auto';
-                });
-                
-                if (navClose) {
-                    navClose.addEventListener('click', () => {
-                        hamburger.classList.remove('active');
-                        navMenu.classList.remove('active');
-                        document.body.style.overflow = 'auto';
-                    });
-                }
-                
-                // Fermer le menu en cliquant sur un lien
-                const navLinks = navMenu.querySelectorAll('.nav-link');
-                navLinks.forEach(link => {
-                    link.addEventListener('click', () => {
-                        hamburger.classList.remove('active');
-                        navMenu.classList.remove('active');
-                        document.body.style.overflow = 'auto';
-                    });
-                });
-            }
-        }
-        
-        // Charger la navigation mobile au chargement de la page
-        document.addEventListener('DOMContentLoaded', loadMobileNav);
-    </script>
+
 </body>
 </html> 
