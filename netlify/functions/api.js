@@ -106,11 +106,20 @@ exports.handler = async (event, context) => {
             submissions.push(submission);
 
             // Envoyer un email de notification
+            let emailSent = false;
+            let emailError = null;
+            
             try {
+                if (!process.env.EMAIL_USER || !process.env.EMAIL_PASS) {
+                    throw new Error('Variables d\'environnement EMAIL_USER et EMAIL_PASS non configurées');
+                }
+                
                 await sendNotificationEmail(submission);
                 console.log('📧 Email de notification envoyé avec succès');
+                emailSent = true;
             } catch (emailError) {
                 console.error('❌ Erreur lors de l\'envoi de l\'email:', emailError);
+                emailError = emailError.message;
             }
 
             return {
@@ -119,7 +128,11 @@ exports.handler = async (event, context) => {
                 body: JSON.stringify({
                     success: true,
                     message: 'Offre confirmée avec succès',
-                    submissionId: submission.id
+                    submissionId: submission.id,
+                    emailStatus: {
+                        sent: emailSent,
+                        error: emailError || null
+                    }
                 })
             };
         }
@@ -243,6 +256,11 @@ exports.handler = async (event, context) => {
 
 // Fonction pour envoyer un email de notification
 async function sendNotificationEmail(submission) {
+    // Vérifier la configuration
+    if (!process.env.EMAIL_USER || !process.env.EMAIL_PASS) {
+        throw new Error('Configuration email manquante: EMAIL_USER et EMAIL_PASS requis');
+    }
+
     const mailOptions = {
         from: process.env.EMAIL_USER,
         to: process.env.EMAIL_USER, // Notification pour l'admin
@@ -255,10 +273,15 @@ async function sendNotificationEmail(submission) {
             <p><strong>Telegram:</strong> ${submission.telegram}</p>
             <p><strong>Date:</strong> ${new Date(submission.timestamp).toLocaleString('fr-FR')}</p>
             <p><strong>ID:</strong> ${submission.id}</p>
+            <hr>
+            <p><em>Email envoyé automatiquement depuis l'API FXEMPEROR & RUGA</em></p>
         `
     };
 
-    return transporter.sendMail(mailOptions);
+    console.log('📧 Tentative d\'envoi d\'email à:', process.env.EMAIL_USER);
+    const result = await transporter.sendMail(mailOptions);
+    console.log('📧 Email envoyé avec succès:', result.messageId);
+    return result;
 }
 
 // Fonction pour envoyer un email de confirmation de paiement
