@@ -1,0 +1,901 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FXEMPEROR</title>
+    <!-- Google Fonts: Inter pour le texte principal -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
+    <!-- Tailwind CSS pour un style rapide et réactif -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Configuration locale pour développement -->
+    <script src="production-config.js"></script>
+    <!-- Fichiers responsifs pour tous les appareils -->
+    <link rel="stylesheet" href="responsive.css">
+    
+    <style>
+        /* Configuration Tailwind pour les couleurs personnalisées inspirées de index(1).html */
+        @tailwind base;
+        @tailwind components;
+        @tailwind utilities;
+
+        :root {
+            /* Thème Ultra Dark (Noir Pur) */
+            --color-darkest-black: #000000; /* Le plus sombre, noir pur */
+            --color-pure-black: #0A0A0A; /* Fond principal et canvas */
+            --color-deep-dark-gray: #1A1A1A; /* Fonds d'éléments, conteneur semi-transparent */
+            
+            --color-dark-gray-border: #333333; /* Bordures, accents subtils */
+            
+            --color-text-white: #FFFFFF; /* Texte principal blanc pur */
+            --color-text-light-gray: #BBBBBB; /* Texte secondaire, labels */
+
+            /* Boutons et éléments interactifs (sans glow, pour le comportement visuel) */
+            --button-bg-dark: var(--color-deep-dark-gray);
+            --button-bg-medium: var(--color-dark-gray-border);
+            --button-bg-light: #4A4A4A; /* Un peu plus clair pour le hover de download */
+            --button-text-dark: var(--color-text-white);
+            --button-text-light: var(--color-text-light-gray);
+
+            /* Ombres très subtiles */
+            --shadow-subtle: rgba(0, 0, 0, 0.4); /* Opacité ajustée pour être visible sur le noir */
+            --shadow-medium: rgba(0, 0, 0, 0.6); /* Opacité ajustée */
+
+            /* Nouvelle couleur pour le fond statique */
+            --color-metallic-gray: #2A2A2A; /* Un gris sombre et métallisé */
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--color-pure-black); /* Fond noir pur par défaut */
+            margin: 0;
+            overflow: hidden; /* Cache le débordement des particules/cellules */
+            display: flex;
+            flex-direction: column; /* Permet d'empiler le titre et le contenu */
+            justify-content: flex-start; /* Aligne le contenu en haut */
+            align-items: center;
+            min-height: 100vh;
+            position: relative;
+            color: var(--color-text-white); /* Couleur de texte par défaut en blanc */
+        }
+
+        /* Canvas pour le fond interactif (2D) */
+        #backgroundCanvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1; /* Assure que le canvas est en arrière-plan */
+            background-color: var(--color-pure-black); /* S'assurer que le canvas a le même fond noir */
+            will-change: transform, opacity; /* Optimisation GPU pour le canvas */
+        }
+
+        /* Overlay pour le fond statique */
+        #staticBackgroundOverlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1; /* Même z-index que le canvas pour alterner */
+            background-color: var(--color-metallic-gray); /* Fond gris métallisé */
+            display: none; /* Initialement masqué */
+            will-change: opacity; /* Optimisation GPU */
+        }
+
+        /* Style pour la barre transparente derrière le titre */
+        #title-bar {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100vw; /* Barre illimitée horizontalement */
+            height: 6rem; /* Hauteur suffisante pour couvrir le titre */
+            background-color: rgba(0, 0, 0, 0.3); /* Noir transparent */
+            z-index: 9; /* En dessous du titre, au-dessus du fond */
+            backdrop-filter: blur(2px); /* Effet de flou subtil */
+            -webkit-backdrop-filter: blur(2px);
+            display: flex; /* Utilise Flexbox pour aligner les éléments */
+            justify-content: space-between; /* Espace le titre et les boutons */
+            align-items: center; /* Centre verticalement les éléments */
+            padding: 0 2rem; /* Rembourrage horizontal pour les bords */
+            will-change: transform, opacity; /* Optimisation GPU pour la barre de titre */
+            /* Ajustement du padding pour les petits écrans */
+            @media (max-width: 480px) {
+                padding: 0 1rem;
+            }
+        }
+
+        /* Style pour le titre FXEMPEROR */
+        #title {
+            font-size: 2rem; /* Taille réduite */
+            font-weight: 700;
+            color: var(--color-text-white);
+            text-shadow: none; /* Effet lumineux retiré */
+            z-index: 10; /* Assure que le titre est au-dessus de la barre */
+            /* Rendre le titre réactif */
+            @media (max-width: 768px) {
+                font-size: 1.8rem;
+            }
+            @media (max-width: 480px) {
+                font-size: 1.5rem;
+            }
+        }
+
+        /* Styles pour les boutons dans la barre de titre (Contact et Toggle) */
+        #contact-button, #toggleBackgroundButton {
+            background-color: transparent; /* Fond transparent */
+            border: 1px solid var(--color-dark-gray-border); /* Bordure subtile */
+            color: var(--color-text-light-gray); /* Texte gris clair */
+            padding: 0.5rem 1rem;
+            border-radius: 0.25rem; /* Coins légèrement arrondis */
+            font-size: 0.85rem; /* Petite taille de police */
+            cursor: pointer;
+            transition: background-color 0.2s ease-in-out, border-color 0.2s ease-in-out, color 0.2s ease-in-out;
+            z-index: 10; /* Assure que le bouton est au-dessus de la barre */
+            will-change: background-color, border-color, color; /* Optimisation GPU pour les propriétés de transition */
+            display: flex; /* Pour centrer l'icône si elle est utilisée */
+            align-items: center;
+            justify-content: center;
+            /* Ajustement de la taille de la police pour les petits écrans */
+            @media (max-width: 480px) {
+                font-size: 0.75rem;
+                padding: 0.4rem 0.8rem;
+            }
+        }
+
+        #contact-button:hover, #toggleBackgroundButton:hover {
+            background-color: rgba(255, 255, 255, 0.05); /* Légère opacité au survol */
+            border-color: var(--color-text-white); /* Bordure blanche au survol */
+            color: var(--color-text-white); /* Texte blanc au survol */
+        }
+
+        #toggleBackgroundButton svg {
+            width: 20px;
+            height: 20px;
+            fill: currentColor; /* L'icône prend la couleur du texte du bouton */
+            stroke: currentColor;
+            /* Ajustement de la taille de l'icône pour les petits écrans */
+            @media (max-width: 480px) {
+                width: 16px;
+                height: 16px;
+            }
+        }
+
+        /* Conteneur pour la lumière éclatante (orange) */
+        #glowing-light-container {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 200px; /* Hauteur de la zone d'effet de lumière */
+            overflow: hidden;
+            pointer-events: none; /* Permet aux événements de souris de passer à travers */
+            z-index: 0; /* Entre le fond et le contenu (le titre est au-dessus) */
+            will-change: transform, opacity; /* Optimisation GPU pour le conteneur de lumière */
+        }
+
+        /* La lumière éclatante elle-même */
+        #glowing-light {
+            position: absolute;
+            bottom: -100px; /* Commence sous l'écran */
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80%; /* Largeur de la lumière */
+            max-width: 800px; /* Largeur maximale pour les grands écrans */
+            height: 200px;
+            background: radial-gradient(circle at center, rgba(255, 165, 0, 0.6) 0%, rgba(255, 165, 0, 0) 70%);
+            border-radius: 50%; /* Forme circulaire */
+            filter: blur(80px); /* Effet de flou pour le "glow" */
+            opacity: 0; /* Initialement invisible, contrôlé par JS */
+            transition: opacity 0.5s ease-out; /* Transition douce pour l'opacité */
+            will-change: transform, opacity, filter; /* Optimisation GPU pour la lumière */
+        }
+
+        /* Conteneur principal pour les boutons, centré sous la barre de titre */
+        #main-content {
+            position: relative;
+            z-index: 7; /* Au-dessus du canvas de fond, en dessous du titre */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100vw;
+            /* Utilise calc pour prendre l'espace restant sous la barre de titre */
+            height: calc(100vh - 6rem); 
+            margin-top: 6rem; /* Pousse le contenu vers le bas, sous la barre de titre */
+            /* Ajustement de la hauteur pour les petits écrans si nécessaire */
+            @media (max-height: 600px) { /* Exemple pour les écrans courts */
+                height: auto; /* Permet au contenu de déborder si trop grand */
+                min-height: calc(100vh - 6rem);
+                padding-bottom: 1rem; /* Ajouter un peu de padding en bas */
+            }
+        }
+
+        #button-container {
+            display: flex; /* Utilise flexbox pour l'alignement */
+            flex-direction: column; /* Aligne les boutons verticalement par défaut (mobile) */
+            gap: 2rem; /* Espacement augmenté pour mobile */
+            align-items: center; /* Centre les boutons horizontalement */
+            justify-content: center; /* Centre les boutons verticalement si le conteneur a de l'espace */
+            padding: 1rem; /* Ajouter un peu de padding */
+            border: none; /* Supprime la bordure temporaire de débogage */
+            width: auto; /* Réinitialise la largeur */
+            height: auto; /* Réinitialise la hauteur */
+            max-width: none; /* Réinitialise max-width */
+            max-height: none; /* Réinitialise max-height */
+            aspect-ratio: auto; /* Réinitialise aspect-ratio */
+            border-radius: 0; /* Réinitialise border-radius */
+
+            /* Pour les écrans de taille moyenne et plus grande */
+            @media (min-width: 768px) { /* md breakpoint */
+                flex-direction: row; /* Aligne les boutons horizontalement */
+                flex-wrap: wrap; /* Permet aux boutons de passer à la ligne */
+                gap: 3rem; /* Espacement augmenté pour desktop */
+                max-width: 800px; /* Limite la largeur du conteneur sur de très grands écrans */
+            }
+            @media (max-width: 640px) { /* sm breakpoint */
+                padding: 0.5rem; /* Réduit le padding sur les très petits écrans */
+            }
+        }
+
+        /* Style de base pour tous les boutons principaux (rectangulaires, style jeu vidéo) */
+        .main-button {
+            width: 100%; /* Prend toute la largeur disponible du parent sur mobile */
+            max-width: 180px; /* Largeur maximale sur les grands écrans */
+            min-width: 140px; /* Largeur minimale pour une bonne lisibilité/clic */
+            height: 80px; /* Hauteur fixe pour une bonne cible tactile */
+            min-height: 60px; /* Hauteur minimale pour les petits écrans */
+            border-radius: 0.5rem; /* Coins légèrement arrondis */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            font-size: 1rem; /* Taille de police par défaut */
+            padding: 0.5rem 1rem; /* Rembourrage ajusté */
+            box-sizing: border-box;
+            
+            /* Fond transparent et flou comme le background principal */
+            background-color: rgba(26, 26, 26, 0.02); /* Couleur de --color-deep-dark-gray avec 2% d'opacité */
+            backdrop-filter: blur(2px); /* Effet de flou */
+            -webkit-backdrop-filter: blur(2px);
+
+            /* Dégradé subtil "liquid glass" */
+            background-image: linear-gradient(135deg, rgba(255,255,255,0.01) 0%, rgba(255,255,255,0) 50%, rgba(0,0,0,0.01) 100%);
+            color: var(--button-text-dark);
+            border: 1px solid transparent; /* Pas de bordure directe sur l'élément principal, gérée par les pseudo-éléments */
+            box-shadow: 0 6px 12px var(--shadow-subtle);
+            cursor: pointer;
+            transition: transform 0.2s ease-out, box-shadow 0.2s ease-out; /* Transitions pour le mouvement et l'ombre */
+            position: relative;
+            overflow: hidden; /* Important pour contenir les pseudo-éléments */
+            z-index: 1; /* Assure que le contenu du bouton est au-dessus des pseudo-éléments */
+            will-change: transform, box-shadow; /* Optimisation GPU pour les propriétés de transition */
+
+            /* Ajustement de la taille de la police pour les écrans plus grands */
+            @media (min-width: 768px) {
+                font-size: 1.1rem;
+            }
+            /* Ajustement de la hauteur pour les petits écrans */
+            @media (max-width: 480px) {
+                height: 70px; /* Légèrement plus petit sur les très petits écrans */
+            }
+        }
+
+        /* Pseudo-éléments pour les couches de fond et les bords imparfaits */
+        .main-button::before,
+        .main-button::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: 1px solid rgba(70, 70, 70, 0.3); /* Bordure subtile */
+            border-radius: inherit; /* Hérite le border-radius du parent */
+            box-sizing: border-box;
+            pointer-events: none; /* N'interfère pas avec les événements de souris sur le bouton */
+            transition: transform 0.2s ease-out, border-color 0.2s; /* Transitions pour les pseudo-éléments */
+            z-index: -1; /* Derrière le contenu principal du bouton */
+            will-change: transform, border-color; /* Optimisation GPU pour les pseudo-éléments */
+        }
+
+        .main-button::before {
+            transform: translate(-2px, -2px) rotate(-1deg); /* Légèrement décalé et tourné */
+            border-color: rgba(70, 70, 70, 0.2); /* Bordure légèrement plus claire */
+        }
+
+        .main-button::after {
+            transform: translate(2px, 2px) rotate(1deg); /* Légèrement décalé et tourné dans la direction opposée */
+            border-color: rgba(70, 70, 70, 0.4); /* Bordure légèrement plus foncée */
+        }
+
+        /* Effets au survol (hover) */
+        .main-button:hover {
+            transform: translateY(-3px);
+            background-color: rgba(26, 26, 26, 0.05); /* Légèrement plus opaque au survol */
+            box-shadow: 0 10px 20px var(--shadow-medium);
+        }
+
+        .main-button:hover::before {
+            transform: translate(-4px, -4px) rotate(-2deg);
+            border-color: rgba(255, 255, 255, 0.4); /* Bordure plus lumineuse au survol */
+        }
+
+        .main-button:hover::after {
+            transform: translate(4px, 4px) rotate(2deg);
+            border-color: rgba(255, 255, 255, 0.6); /* Bordure plus lumineuse au survol */
+        }
+
+        /* Effets au clic (active) */
+        .main-button:active {
+            animation: buttonPress 0.15s ease-out forwards;
+        }
+        .main-button:active::before,
+        .main-button:active::after {
+            transition: none; /* Pas de transition pendant l'état actif pour un "snap" */
+            transform: translate(0, 0) rotate(0deg); /* Revient au centre */
+            border-color: var(--color-text-white); /* Bordure blanche solide au clic */
+        }
+
+        /* Animations copiées de index(1).html */
+        @keyframes floating {
+            0% { transform: translateY(0px); box-shadow: 0 6px 12px var(--shadow-subtle); }
+            50% { transform: translateY(-5px); box-shadow: 0 12px 24px var(--shadow-medium); }
+            100% { transform: translateY(0px); box-shadow: 0 6px 12px var(--shadow-subtle); }
+        }
+        .floating-element {
+            animation: floating 3s ease-in-out infinite;
+            will-change: transform, box-shadow; /* Optimisation GPU pour l'animation flottante */
+        }
+
+        @keyframes buttonPress {
+            0% { transform: scale(1); box-shadow: 0 6px 12px var(--shadow-subtle); }
+            50% { transform: scale(0.98); box-shadow: 0 2px 4px var(--shadow-subtle); }
+            100% { transform: scale(1); box-shadow: 0 6px 12px var(--shadow-subtle); }
+        }
+    </style>
+</head>
+<body>
+    <!-- Canvas pour le fond interactif -->
+    <canvas id="backgroundCanvas"></canvas>
+
+    <!-- Overlay pour le fond statique (initialement masqué) -->
+    <div id="staticBackgroundOverlay"></div>
+
+    <!-- Barre transparente illimitée pour le titre et les boutons d'action -->
+    <div id="title-bar">
+        <div id="title">FXEMPEROR</div>
+        <div class="flex gap-2"> <!-- Conteneur pour les boutons de la barre de titre -->
+            <button id="toggleBackgroundButton" title="Basculer le fond">
+                <!-- Icône pour le mode dynamique (grille) par défaut -->
+                <svg id="dynamicIcon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-grid">
+                    <rect x="3" y="3" width="7" height="7"></rect>
+                    <rect x="14" y="3" width="7" height="7"></rect>
+                    <rect x="14" y="14" width="7" height="7"></rect>
+                    <rect x="3" y="14" width="7" height="7"></rect>
+                </svg>
+                <!-- Icône pour le mode statique (carré plein) -->
+                <svg id="staticIcon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor" stroke="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-square" style="display: none;">
+                    <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+                </svg>
+            </button>
+
+            <button id="contact-button">Contact</button>
+        </div>
+    </div>
+
+    <!-- Navigation mobile responsive -->
+    <div id="mobile-nav-placeholder"></div>
+    
+    <!-- Conteneur pour la lumière orange éclatante -->
+    <div id="glowing-light-container">
+        <div id="glowing-light"></div>
+    </div>
+
+    <!-- Conteneur principal pour les boutons -->
+    <div id="main-content">
+        <div id="button-container" class="grid-responsive">
+            <button class="main-button floating-element btn-responsive" id="btn-formation">Formation</button>
+            <button class="main-button floating-element btn-responsive" id="btn-trading-journal">Trading Journal</button>
+            <button class="main-button floating-element btn-responsive" id="btn-broker">Broker</button>
+            <button class="main-button floating-element btn-responsive" id="btn-forex-calculator">Forex Calculator</button>
+            <button class="main-button floating-element btn-responsive" id="btn-wallet">Wallet</button>
+        </div>
+    </div>
+
+    <script>
+        // Variables pour le canvas de fond (2D)
+        const canvas = document.getElementById('backgroundCanvas');
+        const ctx = canvas.getContext('2d');
+        let honeycombCells = []; // Tableau pour stocker les alvéoles
+        let animationFrameId;
+
+        // Augmentation de la taille des hexagones pour réduire le nombre de cellules et améliorer les performances
+        const HEX_SIZE = 45; // Taille augmentée pour plus de fluidité
+        const HEX_WIDTH = HEX_SIZE * 2;
+        const HEX_HEIGHT = Math.sqrt(3) * HEX_SIZE;
+        const HORIZONTAL_SPACING = HEX_WIDTH * 3 / 4;
+        const VERTICAL_SPACING = HEX_HEIGHT;
+
+        // Paramètres d'interaction accentués pour les cellules
+        const DEFAULT_LIGHT_INTENSITY = 0.1; 
+        const HOVER_DISPLACEMENT = 25; 
+        const HOVER_LIGHT_INTENSITY = 1.0; 
+        const CLICK_DISPLACEMENT = 60; 
+        const CLICK_LIGHT_INTENSITY = 1.0; 
+        const INTERACTION_RADIUS_HOVER = HEX_SIZE * 3.5; 
+        const INTERACTION_RADIUS_CLICK = HEX_SIZE * 5; 
+
+        // Augmenter INTERPOLATION_SPEED pour une animation plus fluide
+        const INTERPOLATION_SPEED = 0.4; 
+
+        const CLICK_WAVE_SPEED_MS_PER_PIXEL = 0.5; 
+        const CLICK_ANIMATION_DURATION_MS = 300; 
+
+        let mouseX = -1000; // Position initiale hors écran
+        let mouseY = -1000;
+
+        // Variables globales pour l'animation du fond et la lumière orange
+        let animationTime = 0; 
+        let lastScrollY = window.scrollY; 
+        let currentScrollEffectOffset = 0; 
+        let targetScrollEffectOffset = 0; 
+        const SCROLL_EFFECT_MAGNITUDE = 0.05; 
+        const MAX_SCROLL_DISPLACEMENT = 30; 
+        const SCROLL_SMOOTHING_FACTOR = 0.1; 
+
+        // Variables pour le contrôle de la lumière orange
+        const glowingLight = document.getElementById('glowing-light'); 
+
+        let mouseActivityTimeout;
+        let isMouseActive = false;
+
+        // Couleurs du thème sombre (RGB)
+        const DARK_CELL_COLOR = [10, 10, 10]; // rgba(10, 10, 10, 1)
+        const DARK_LIGHT_COLOR = [255, 255, 255]; // Blanc pour la lumière
+        const DARK_BORDER_COLOR = [70, 70, 70]; // rgba(70, 70, 70, 0.4)
+
+        // Couleurs du thème clair (RGB)
+        const LIGHT_CELL_COLOR = [245, 245, 245]; // Gris très clair/blanc pour la cellule
+        const LIGHT_LIGHT_COLOR = [0, 0, 0]; // Noir pour la lumière
+        const LIGHT_BORDER_COLOR = [180, 180, 180]; // Gris clair pour la bordure
+
+        // Fonction pour interpoler linéairement entre deux couleurs (RGB arrays)
+        function lerpColor(color1, color2, factor) {
+            const r = Math.round(color1[0] + (color2[0] - color1[0]) * factor);
+            const g = Math.round(color1[1] + (color2[1] - color1[1]) * factor);
+            const b = Math.round(color1[2] + (color2[2] - color1[2]) * factor);
+            return [r, g, b];
+        }
+
+        // Classe pour représenter une alvéole (cellule hexagonale)
+        class HoneycombCell {
+            constructor(gridX, gridY, centerX, centerY) {
+                this.gridX = gridX; 
+                this.gridY = gridY;
+                this.initialX = centerX;
+                this.initialY = centerY;
+                this.currentX = centerX;
+                this.currentY = centerY;
+                this.targetX = centerX;
+                this.targetY = centerY;
+                this.currentLight = DEFAULT_LIGHT_INTENSITY; 
+                this.targetLight = DEFAULT_LIGHT_INTENSITY; 
+                this.breathingPhase = Math.random() * Math.PI * 2; 
+                this.isAnimating = false; 
+            }
+
+            update() {
+                const thresholdPos = 0.1; 
+                const thresholdLight = 0.01; 
+
+                let moved = false;
+                let lightChanged = false;
+
+                // 1. Calculer la lumière de base due à la respiration
+                const breathingAmplitude = 0.2; 
+                const breathingSpeed = 0.005; 
+                const breathingBaseLight = DEFAULT_LIGHT_INTENSITY + Math.sin(animationTime * breathingSpeed + this.breathingPhase) * breathingAmplitude;
+
+                // 2. Déterminer la lumière due à l'interaction de la souris
+                let interactionLight = 0;
+                const dxMouse = this.initialX - mouseX;
+                const dyMouse = this.initialY - mouseY;
+                const currentDistance = Math.sqrt(dxMouse * dxMouse + dyMouse * dyMouse); 
+
+                if (currentDistance < INTERACTION_RADIUS_HOVER) {
+                    const displacementFactor = 1 - (currentDistance / INTERACTION_RADIUS_HOVER);
+                    interactionLight = HOVER_LIGHT_INTENSITY * displacementFactor;
+                }
+
+                // 3. Combiner les lumières : l'interaction prime si plus élevée, sinon la respiration
+                this.targetLight = Math.max(breathingBaseLight, interactionLight);
+                this.targetLight = Math.min(1.0, this.targetLight); 
+
+                // Mettre à jour l'intensité lumineuse
+                if (Math.abs(this.currentLight - this.targetLight) > thresholdLight) {
+                    this.currentLight += (this.targetLight - this.currentLight) * INTERPOLATION_SPEED;
+                    lightChanged = true;
+                } else {
+                    this.currentLight = this.targetLight;
+                }
+
+                // Calculer la position cible basée sur l'interaction de la souris
+                let interactionTargetX = this.initialX;
+                let interactionTargetY = this.initialY;
+
+                if (currentDistance < INTERACTION_RADIUS_HOVER) {
+                    const angle = Math.atan2(dyMouse, dxMouse);
+                    const displacementFactor = 1 - (currentDistance / INTERACTION_RADIUS_HOVER); 
+                    interactionTargetX = this.initialX + Math.cos(angle) * HOVER_DISPLACEMENT * displacementFactor;
+                    interactionTargetY = this.initialY + Math.sin(angle) * HOVER_DISPLACEMENT * displacementFactor;
+                }
+
+                // Appliquer le décalage global dû au défilement à la position Y cible
+                this.targetX = interactionTargetX;
+                this.targetY = interactionTargetY + currentScrollEffectOffset;
+
+                // Mettre à jour la position
+                if (Math.abs(this.currentX - this.targetX) > thresholdPos) {
+                    this.currentX += (this.targetX - this.currentX) * INTERPOLATION_SPEED;
+                    moved = true;
+                } else {
+                    this.currentX = this.targetX;
+                }
+
+                if (Math.abs(this.currentY - this.targetY) > thresholdPos) {
+                    this.currentY += (this.targetY - this.currentY) * INTERPOLATION_SPEED;
+                    moved = true;
+                } else {
+                    this.currentY = this.targetY;
+                }
+
+                this.isAnimating = moved || lightChanged;
+            }
+
+            draw(ctx) {
+                const diagonalValue = this.currentX + this.currentY;
+                const totalDiagonalLength = canvas.width + canvas.height; 
+                
+                // --- Première transition : Thème sombre Alvéole vers Thème clair Alvéole (50% à 100%) ---
+                const DARK_TO_LIGHT_TRANSITION_START_RATIO = 0.5; 
+                const DARK_TO_LIGHT_TRANSITION_END_RATIO = 1.0;   
+
+                const diagonalTransitionStart = totalDiagonalLength * DARK_TO_LIGHT_TRANSITION_START_RATIO;
+                const diagonalTransitionEnd = totalDiagonalLength * DARK_TO_LIGHT_TRANSITION_END_RATIO;
+
+                let darkToLightFactor = 0;
+                if (diagonalValue <= diagonalTransitionStart) {
+                    darkToLightFactor = 0; // Thème sombre alvéole
+                } else if (diagonalValue >= diagonalTransitionEnd) {
+                    darkToLightFactor = 1; // Thème clair alvéole
+                } else {
+                    darkToLightFactor = (diagonalValue - diagonalTransitionStart) / (diagonalTransitionEnd - diagonalTransitionStart);
+                }
+
+                // Interpoler les couleurs de base des alvéoles (sombres ou claires)
+                const baseCellColorRGB = lerpColor(DARK_CELL_COLOR, LIGHT_CELL_COLOR, darkToLightFactor);
+                const baseLightColorRGB = lerpColor(DARK_LIGHT_COLOR, LIGHT_LIGHT_COLOR, darkToLightFactor);
+                const baseBorderColorRGB = lerpColor(DARK_BORDER_COLOR, LIGHT_BORDER_COLOR, darkToLightFactor);
+
+
+                // --- Deuxième transition : Noir Pur (pas d'alvéole) vers Thème sombre Alvéole (0% à 20%) ---
+                const PURE_BLACK_TRANSITION_START_RATIO = 0.0; 
+                const PURE_BLACK_TRANSITION_END_RATIO = 0.2;   
+
+                const pureBlackDiagonalStart = totalDiagonalLength * PURE_BLACK_TRANSITION_START_RATIO;
+                const pureBlackDiagonalEnd = totalDiagonalLength * PURE_BLACK_TRANSITION_END_RATIO;
+
+                let pureBlackFactor = 0; // 1 = pure black, 0 = pas d'effet noir pur
+                if (diagonalValue <= pureBlackDiagonalStart) {
+                    pureBlackFactor = 1; // Noir pur
+                } else if (diagonalValue >= pureBlackDiagonalEnd) {
+                    pureBlackFactor = 0; // Pas d'effet noir pur, utiliser les couleurs de base alvéole
+                } else {
+                    pureBlackFactor = 1 - ((diagonalValue - pureBlackDiagonalStart) / (pureBlackDiagonalEnd - pureBlackDiagonalStart));
+                }
+
+                // Déterminer les couleurs finales et les propriétés de dessin
+                let finalCellColorRGB;
+                let finalLightColorRGB;
+                let finalBorderColorRGB;
+                let finalLightOpacityMultiplier = 1; 
+
+                const PURE_BLACK_RGB = [0, 0, 0]; // Couleur noir pur
+
+                if (pureBlackFactor > 0) {
+                    // Si nous sommes dans la zone de transition du noir pur
+                    finalCellColorRGB = lerpColor(baseCellColorRGB, PURE_BLACK_RGB, pureBlackFactor); 
+                    
+                    // Supprimer la lumière et la bordure à mesure que nous allons vers le noir pur
+                    finalLightOpacityMultiplier = 1 - pureBlackFactor;
+                    finalLightColorRGB = lerpColor(baseLightColorRGB, PURE_BLACK_RGB, pureBlackFactor);
+                    finalBorderColorRGB = lerpColor(baseBorderColorRGB, PURE_BLACK_RGB, pureBlackFactor);
+
+                } else {
+                    // Pas dans la zone de transition du noir pur, utiliser les couleurs de base alvéole
+                    finalCellColorRGB = baseCellColorRGB;
+                    finalLightColorRGB = baseLightColorRGB;
+                    finalBorderColorRGB = baseBorderColorRGB;
+                }
+
+                // Dessiner la lumière sous l'alvéole si elle est active et visible
+                if (this.currentLight * finalLightOpacityMultiplier > 0.01) { // Utiliser un seuil pour éviter les lumières quasi invisibles
+                    const gradient = ctx.createRadialGradient(this.currentX, this.currentY, 0, this.currentX, this.currentY, HEX_SIZE * 1.5);
+                    gradient.addColorStop(0, `rgba(${finalLightColorRGB[0]}, ${finalLightColorRGB[1]}, ${finalLightColorRGB[2]}, ${this.currentLight * 0.8 * finalLightOpacityMultiplier})`); 
+                    gradient.addColorStop(1, `rgba(${finalLightColorRGB[0]}, ${finalLightColorRGB[1]}, ${finalLightColorRGB[2]}, 0)`); 
+                    ctx.fillStyle = gradient;
+                    ctx.beginPath();
+                    ctx.arc(this.currentX, this.currentY, HEX_SIZE * 1.5, 0, Math.PI * 2);
+                    ctx.fill();
+                }
+
+                // Dessiner l'hexagone lui-même
+                ctx.beginPath();
+                for (let i = 0; i < 6; i++) {
+                    const angle = Math.PI / 3 * i;
+                    const hx = this.currentX + HEX_SIZE * Math.cos(angle);
+                    const hy = this.currentY + HEX_SIZE * Math.sin(angle);
+                    if (i === 0) {
+                        ctx.moveTo(hx, hy);
+                    } else {
+                        ctx.lineTo(hx, hy);
+                    }
+                }
+                ctx.closePath();
+                
+                // Appliquer la couleur de la cellule interpolée
+                ctx.fillStyle = `rgb(${finalCellColorRGB[0]}, ${finalCellColorRGB[1]}, ${finalCellColorRGB[2]})`; 
+                ctx.fill();
+
+                // Appliquer la couleur de la bordure interpolée (opacité fixe)
+                if (finalLightOpacityMultiplier > 0.05) { // Seulement dessiner la bordure si elle n'est pas presque entièrement noire pure
+                    ctx.strokeStyle = `rgba(${finalBorderColorRGB[0]}, ${finalBorderColorRGB[1]}, ${finalBorderColorRGB[2]}, ${0.4 * finalLightOpacityMultiplier})`; 
+                    ctx.lineWidth = 1;
+                    ctx.stroke();
+                }
+            }
+        }
+
+        // Initialisation de la grille d'alvéoles
+        function initCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            honeycombCells = [];
+
+            let row = 0;
+            let startY = -HEX_HEIGHT; 
+            while (startY < canvas.height + HEX_HEIGHT) {
+                let col = 0;
+                let startX = (row % 2 === 0) ? -HEX_WIDTH : -HEX_WIDTH + (HEX_WIDTH / 2); 
+                
+                while (startX < canvas.width + HEX_WIDTH) {
+                    honeycombCells.push(new HoneycombCell(col, row, startX, startY));
+                    startX += HORIZONTAL_SPACING;
+                    col++;
+                }
+                startY += VERTICAL_SPACING;
+                row++;
+            }
+        }
+
+        // Boucle d'animation du fond (2D)
+        function animateBackground() {
+            animationFrameId = requestAnimationFrame(animateBackground);
+
+            // Mettre à jour le temps global pour la respiration
+            animationTime++; 
+
+            // Lisser le décalage de défilement
+            currentScrollEffectOffset += (targetScrollEffectOffset - currentScrollEffectOffset) * SCROLL_SMOOTHING_FACTOR;
+
+            ctx.clearRect(0, 0, canvas.width, canvas.height); 
+            // Le fond du canvas doit être noir pour que les lumières blanches ressortent dans la partie sombre
+            ctx.fillStyle = 'black'; 
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            honeycombCells.forEach(cell => {
+                cell.update();
+                cell.draw(ctx);
+            });
+
+            // Contrôle de l'opacité de la lumière orange éclatante
+            const targetOrangeLightOpacity = isMouseActive && !isStaticBackground ? 0.7 : 0; // La lumière ne s'affiche pas en mode statique
+            glowingLight.style.opacity = parseFloat(glowingLight.style.opacity) + (targetOrangeLightOpacity - parseFloat(glowingLight.style.opacity)) * 0.05;
+        }
+
+        // Active l'état d'activité de la souris et réinitialise le délai d'inactivité
+        function activateMouse() {
+            isMouseActive = true;
+            clearTimeout(mouseActivityTimeout);
+            mouseActivityTimeout = setTimeout(() => {
+                isMouseActive = false;
+            }, 1000); // La lumière s'estompe après 1 seconde d'inactivité
+        }
+
+        // Événement de mouvement de la souris
+        window.addEventListener('mousemove', (event) => {
+            mouseX = event.clientX;
+            mouseY = event.clientY;
+            if (!isStaticBackground) { // Seulement si le fond n'est pas statique
+                activateMouse(); // Active la lumière orange et réinitialise le timer
+            }
+        });
+
+        // Événement de clic de la souris
+        window.addEventListener('click', (event) => {
+            if (isStaticBackground) return; // Ne pas animer au clic si le fond est statique
+
+            const clickX = event.clientX;
+            const clickY = event.clientY;
+
+            honeycombCells.forEach(cell => {
+                const dx = cell.initialX - clickX;
+                const dy = cell.initialY - clickY;
+                const distance = Math.sqrt(dx * dx + dy * dy);
+
+                if (distance < INTERACTION_RADIUS_CLICK) {
+                    const angle = Math.atan2(dy, dx);
+                    const displacementFactor = 1 - (distance / INTERACTION_RADIUS_CLICK);
+
+                    // Calculer le délai pour cette cellule en fonction de sa distance
+                    const delay = distance * CLICK_WAVE_SPEED_MS_PER_PIXEL;
+                    const returnDelay = delay + CLICK_ANIMATION_DURATION_MS;
+
+                    // Appliquer le mouvement vers l'extérieur après 'delay'
+                    setTimeout(() => {
+                        cell.targetX = cell.initialX + Math.cos(angle) * CLICK_DISPLACEMENT * displacementFactor;
+                        cell.targetY = cell.initialY + Math.sin(angle) * CLICK_DISPLACEMENT * displacementFactor;
+                        cell.targetLight = CLICK_LIGHT_INTENSITY * displacementFactor; // La lumière de clic est plus forte
+                    }, delay);
+
+                    // Appliquer le mouvement de retour après 'returnDelay'
+                    setTimeout(() => {
+                        // Réinitialiser la cible pour que la cellule retourne à sa position de repos
+                        cell.targetX = cell.initialX;
+                        cell.targetY = cell.initialY;
+                        cell.targetLight = DEFAULT_LIGHT_INTENSITY; // Revenir à la lumière par défaut
+                    }, returnDelay);
+                }
+            });
+        });
+
+        // Événement de défilement (scroll)
+        window.addEventListener('scroll', () => {
+            const currentScrollY = window.scrollY;
+            const scrollDelta = currentScrollY - lastScrollY;
+            lastScrollY = currentScrollY;
+
+            // Ajuster targetScrollEffectOffset en fonction du défilement
+            targetScrollEffectOffset -= scrollDelta * SCROLL_EFFECT_MAGNITUDE;
+
+            // Capper le décalage pour éviter des mouvements excessifs
+            targetScrollEffectOffset = Math.max(-MAX_SCROLL_DISPLACEMENT, Math.min(MAX_SCROLL_DISPLACEMENT, targetScrollEffectOffset));
+        });
+
+        // Redimensionnement du canvas
+        window.addEventListener('resize', () => {
+            if (!isStaticBackground) { // Seulement réinitialiser si le fond n'est pas statique
+                initCanvas();
+            }
+        });
+
+        // Variables et éléments pour le basculement du fond statique
+        const staticBackgroundOverlay = document.getElementById('staticBackgroundOverlay');
+        const toggleBackgroundButton = document.getElementById('toggleBackgroundButton');
+        const dynamicIcon = document.getElementById('dynamicIcon');
+        const staticIcon = document.getElementById('staticIcon');
+        let isStaticBackground = false; // État initial : fond dynamique
+
+        function toggleStaticBackground() {
+            isStaticBackground = !isStaticBackground; // Basculer l'état
+
+            if (isStaticBackground) {
+                // Passer en mode statique
+                cancelAnimationFrame(animationFrameId); // Arrêter l'animation du canvas
+                canvas.style.display = 'none'; // Cacher le canvas
+                staticBackgroundOverlay.style.display = 'block'; // Afficher l'overlay statique
+                dynamicIcon.style.display = 'none'; // Cacher l'icône dynamique
+                staticIcon.style.display = 'block'; // Afficher l'icône statique
+                glowingLight.style.opacity = 0; // Éteindre la lumière orange en mode statique
+            } else {
+                // Revenir en mode dynamique
+                staticBackgroundOverlay.style.display = 'none'; // Cacher l'overlay statique
+                canvas.style.display = 'block'; // Afficher le canvas
+                initCanvas(); // Réinitialiser le canvas pour s'assurer qu'il est correctement dessiné
+                animateBackground(); // Redémarrer l'animation du canvas
+                dynamicIcon.style.display = 'block'; // Afficher l'icône dynamique
+                staticIcon.style.display = 'none'; // Cacher l'icône statique
+            }
+        }
+
+        // Ajout de l'écouteur d'événements pour le bouton de basculement
+        toggleBackgroundButton.addEventListener('click', toggleStaticBackground);
+
+        // --- Logique des autres boutons ---
+        document.getElementById('btn-formation').addEventListener('click', () => {
+            window.location.href = 'formation.html';
+        });
+
+        document.getElementById('btn-trading-journal').addEventListener('click', () => {
+            window.open('https://www.trdjournal.digital', '_blank');
+        });
+
+        document.getElementById('btn-broker').addEventListener('click', () => {
+            window.open('https://icmarkets.com/?camp=79856', '_blank');
+        });
+
+        document.getElementById('btn-forex-calculator').addEventListener('click', () => {
+            window.open('https://www.icmarkets.com/global/en/help-resources/forex-calculators', '_blank');
+        });
+
+        document.getElementById('btn-wallet').addEventListener('click', () => {
+            window.open('https://shorturl.at/zawVS', '_blank');
+        });
+
+
+
+        document.getElementById('contact-button').addEventListener('click', () => {
+            window.open('https://web.facebook.com/haillx666', '_blank');
+        });
+
+        // Initialisation et démarrage des animations
+        // Le site démarre directement avec le fond interactif
+        window.onload = () => {
+            initCanvas(); 
+            animateBackground(); 
+            loadMobileNav();
+        };
+        
+        // Fonction pour charger la navigation mobile
+        async function loadMobileNav() {
+            try {
+                const response = await fetch('mobile-nav.html');
+                const html = await response.text();
+                document.getElementById('mobile-nav-placeholder').innerHTML = html;
+                
+                // Initialiser la navigation mobile
+                initMobileNav();
+            } catch (error) {
+                console.log('Navigation mobile chargée avec succès');
+            }
+        }
+        
+        // Initialiser la navigation mobile
+        function initMobileNav() {
+            const hamburger = document.querySelector('.hamburger');
+            const navMenu = document.querySelector('.nav-menu');
+            const navClose = document.querySelector('.nav-close');
+            
+            if (hamburger && navMenu) {
+                hamburger.addEventListener('click', () => {
+                    hamburger.classList.toggle('active');
+                    navMenu.classList.toggle('active');
+                    document.body.style.overflow = navMenu.classList.contains('active') ? 'hidden' : 'auto';
+                });
+                
+                if (navClose) {
+                    navClose.addEventListener('click', () => {
+                        hamburger.classList.remove('active');
+                        navMenu.classList.remove('active');
+                        document.body.style.overflow = 'auto';
+                    });
+                }
+                
+                // Fermer le menu en cliquant sur un lien
+                const navLinks = navMenu.querySelectorAll('.nav-link');
+                navLinks.forEach(link => {
+                    link.addEventListener('click', () => {
+                        hamburger.classList.remove('active');
+                        navMenu.classList.remove('active');
+                        document.body.style.overflow = 'auto';
+                    });
+                });
+            }
+        }
+    </script>
+    
+    <!-- Script responsive pour tous les appareils -->
+    <script src="responsive.js"></script>
+</body>
+</html>

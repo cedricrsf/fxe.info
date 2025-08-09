@@ -1,0 +1,804 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Paiement - FXEMPEROR</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Fichiers responsifs pour tous les appareils -->
+    <link rel="stylesheet" href="responsive.css">
+    
+    <style>
+        :root {
+            --primary: #FFFFFF;
+            --secondary: #F8FAFC;
+            --accent: #D4AF37;
+            --accent-hover: #B8941F;
+            --gold-light: #F4E4BC;
+            --gold-medium: #D4AF37;
+            --gold-dark: #B8941F;
+            --success: #10B981;
+            --warning: #F59E0B;
+            --error: #EF4444;
+            --text-primary: #1F2937;
+            --text-secondary: #6B7280;
+            --border: #E5E7EB;
+            --shadow: rgba(0, 0, 0, 0.1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #FFFFFF 0%, #F8FAFC 50%, #F1F5F9 100%);
+            color: var(--text-primary);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        .glass-card {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(212, 175, 55, 0.2);
+            border-radius: 24px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+        }
+
+        .glass-card:hover {
+            border-color: var(--accent);
+            box-shadow: 0 0 40px rgba(212, 175, 55, 0.15);
+            transform: translateY(-2px);
+        }
+
+        .payment-method {
+            background: rgba(255, 255, 255, 0.6);
+            border: 2px solid transparent;
+            border-radius: 16px;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            backdrop-filter: blur(10px);
+        }
+
+        .payment-method::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(212, 175, 55, 0.1), transparent);
+            transition: left 0.5s;
+        }
+
+        .payment-method:hover::before {
+            left: 100%;
+        }
+
+        .payment-method:hover {
+            border-color: var(--accent);
+            background: rgba(255, 255, 255, 0.8);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(212, 175, 55, 0.2);
+        }
+
+        .payment-method.selected {
+            border-color: var(--accent);
+            background: rgba(255, 255, 255, 0.9);
+            box-shadow: 0 0 20px rgba(212, 175, 55, 0.3);
+        }
+
+        /* Enhanced logo styling */
+        .payment-method .glow {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+        }
+
+        .payment-method:hover .glow {
+            transform: scale(1.05);
+            box-shadow: 0 0 25px rgba(212, 175, 55, 0.3);
+        }
+
+        .payment-method .glow img {
+            transition: all 0.3s ease;
+            filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
+        }
+
+        .payment-method:hover .glow img {
+            transform: scale(1.1);
+            filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.2));
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--accent) 0%, var(--accent-hover) 100%);
+            border: none;
+            border-radius: 12px;
+            color: white;
+            font-weight: 600;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-primary::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s;
+        }
+
+        .btn-primary:hover::before {
+            left: 100%;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(212, 175, 55, 0.4);
+        }
+
+        .back-button {
+            background: rgba(255, 255, 255, 0.7);
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            border-radius: 12px;
+            transition: all 0.3s ease;
+            color: var(--text-primary);
+        }
+
+        .back-button:hover {
+            background: rgba(212, 175, 55, 0.1);
+            border-color: var(--accent);
+            color: var(--accent);
+        }
+
+        .fade-in {
+            animation: fadeIn 0.6s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .slide-up {
+            animation: slideUp 0.4s ease-out;
+        }
+
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .glow {
+            box-shadow: 0 0 20px rgba(212, 175, 55, 0.3);
+        }
+
+        .text-gradient {
+            background: linear-gradient(135deg, var(--accent) 0%, var(--gold-dark) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .gold-text {
+            color: var(--accent);
+        }
+
+        .currency-badge {
+            background: rgba(212, 175, 55, 0.2);
+            color: var(--accent);
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.875rem;
+            font-weight: 600;
+        }
+
+        .amount-display {
+            background: linear-gradient(135deg, rgba(212, 175, 55, 0.1) 0%, rgba(244, 228, 188, 0.1) 100%);
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            border-radius: 16px;
+            padding: 24px;
+        }
+
+        /* Modal Glassmorphism Styles */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.15);
+            backdrop-filter: blur(8px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .modal-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .modal-container {
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 24px;
+            padding: 32px;
+            max-width: 480px;
+            width: 90%;
+            transform: scale(0.9) translateY(20px);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .modal-overlay.active .modal-container {
+            transform: scale(1) translateY(0);
+        }
+
+        .modal-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.05) 100%);
+            border-radius: 24px;
+            z-index: -1;
+        }
+
+        .modal-container::after {
+            content: '';
+            position: absolute;
+            top: -1px;
+            left: -1px;
+            right: -1px;
+            bottom: -1px;
+            background: linear-gradient(135deg, rgba(212, 175, 55, 0.2), rgba(255, 255, 255, 0.1), rgba(212, 175, 55, 0.1));
+            border-radius: 24px;
+            z-index: -2;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .modal-container:hover::after {
+            opacity: 1;
+        }
+
+        .modal-header {
+            text-align: center;
+            margin-bottom: 24px;
+        }
+
+        .modal-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: rgba(31, 41, 55, 0.9);
+            margin-bottom: 8px;
+        }
+
+        .modal-subtitle {
+            font-size: 0.875rem;
+            color: rgba(107, 114, 128, 0.8);
+            font-weight: 400;
+        }
+
+        .modal-content {
+            margin-bottom: 24px;
+        }
+
+        .modal-actions {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+        }
+
+        .modal-btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 12px;
+            font-weight: 500;
+            font-size: 0.875rem;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .modal-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s;
+        }
+
+        .modal-btn:hover::before {
+            left: 100%;
+        }
+
+        .modal-btn-primary {
+            background: linear-gradient(135deg, rgba(212, 175, 55, 0.8) 0%, rgba(184, 148, 31, 0.8) 100%);
+            color: white;
+            border: 1px solid rgba(212, 175, 55, 0.3);
+        }
+
+        .modal-btn-primary:hover {
+            background: linear-gradient(135deg, rgba(212, 175, 55, 0.9) 0%, rgba(184, 148, 31, 0.9) 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(212, 175, 55, 0.3);
+        }
+
+        .modal-btn-secondary {
+            background: rgba(255, 255, 255, 0.1);
+            color: rgba(31, 41, 55, 0.8);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .modal-btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.15);
+            border-color: rgba(255, 255, 255, 0.3);
+            transform: translateY(-1px);
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 16px;
+            right: 16px;
+            width: 32px;
+            height: 32px;
+            border: none;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        .modal-close:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: rotate(90deg);
+        }
+
+        .modal-close svg {
+            width: 16px;
+            height: 16px;
+            color: rgba(31, 41, 55, 0.7);
+        }
+
+        /* Modal Animation Classes */
+        .modal-fade-in {
+            animation: modalFadeIn 0.6s ease-out;
+        }
+
+        @keyframes modalFadeIn {
+            from { 
+                opacity: 0; 
+                transform: scale(0.95) translateY(30px);
+            }
+            to { 
+                opacity: 1; 
+                transform: scale(1) translateY(0);
+            }
+        }
+
+        .modal-content-fade {
+            animation: modalContentFade 0.8s ease-out 0.2s both;
+        }
+
+        @keyframes modalContentFade {
+            from { 
+                opacity: 0; 
+                transform: translateY(20px);
+            }
+            to { 
+                opacity: 1; 
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="min-h-screen flex items-center justify-center p-6">
+        <div class="w-full max-w-2xl">
+            <!-- Back Button -->
+            <div class="mb-8 fade-in">
+                <button id="back-to-formation" class="back-button flex items-center px-4 py-3 text-sm font-medium transition-all duration-300">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" />
+                    </svg>
+                    Retour à la formation
+                </button>
+            </div>
+            
+            <!-- Header -->
+            <div class="text-center mb-12 fade-in">
+                <h1 id="payment-title" class="text-4xl font-bold mb-4 text-gradient">Paiement Sécurisé</h1>
+                <p class="text-lg text-gray-600">Choisissez votre méthode de paiement préférée</p>
+            </div>
+
+            <!-- Order Summary -->
+            <div id="order-summary" class="glass-card p-8 mb-8 slide-up">
+                <div class="flex items-center justify-between mb-6">
+                    <h3 class="text-xl font-semibold text-gray-800">Résumé de votre commande</h3>
+                    <div class="currency-badge">FXEMPEROR</div>
+                </div>
+                <div class="space-y-4">
+                    <div class="flex justify-between items-center">
+                        <span class="text-gray-600">Offre sélectionnée</span>
+                        <span id="offer-name" class="font-semibold text-gray-800">-</span>
+                    </div>
+                    <div class="flex justify-between items-center">
+                        <span class="text-gray-600">Email</span>
+                        <span id="user-email" class="font-semibold text-gray-800">-</span>
+                    </div>
+                    <div class="flex justify-between items-center">
+                        <span class="text-gray-600">Telegram</span>
+                        <span id="user-telegram" class="font-semibold text-gray-800">-</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Amount Display -->
+            <div class="amount-display mb-8 slide-up">
+                <div class="text-center">
+                    <div class="mb-2">
+                        <span class="text-2xl font-bold text-gray-800" id="amount-mga">-</span>
+                        <span class="text-gray-600 ml-2">Ar</span>
+                    </div>
+                    <div class="text-sm text-gray-600">
+                        Équivalent: <span id="amount-usd" class="font-semibold gold-text">-</span> USD
+                        <span class="ml-2 text-xs">(Taux: <span id="exchange-rate">-</span>)</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Payment Methods -->
+            <div class="glass-card p-8 mb-8 slide-up">
+                <h3 class="text-xl font-semibold mb-6 text-gray-800">Méthode de paiement</h3>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <!-- Bitcoin -->
+                    <div class="payment-method p-6" data-method="btc" data-address="12iy3KrrRyijTaY2TAm1nxoNubQvNV55WT">
+                        <div class="flex items-center">
+                            <div class="w-16 h-16 bg-gradient-to-br from-orange-400 to-orange-600 rounded-2xl flex items-center justify-center mr-4 glow shadow-lg">
+                                <img src="crypto logo/bitcoin-btc-logo.png" alt="Bitcoin" class="w-10 h-10 object-contain">
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-gray-800">Bitcoin</h4>
+                                <p class="text-sm text-gray-600">Réseau Bitcoin (BTC)</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- USDT -->
+                    <div class="payment-method p-6" data-method="usdt" data-address="TQbuHBq1j3RoXnYaic9ejcaAgLjCEEF7LL">
+                        <div class="flex items-center">
+                            <div class="w-16 h-16 bg-gradient-to-br from-green-400 to-green-600 rounded-2xl flex items-center justify-center mr-4 glow shadow-lg">
+                                <img src="crypto logo/tether-usdt-logo.png" alt="USDT" class="w-10 h-10 object-contain">
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-gray-800">USDT</h4>
+                                <p class="text-sm text-gray-600">Réseau Tron (TRC20)</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- MVola -->
+                    <div class="payment-method p-6" data-method="mvola" data-address="0341605006">
+                        <div class="flex items-center">
+                            <div class="w-16 h-16 bg-gradient-to-br from-blue-400 to-blue-600 rounded-2xl flex items-center justify-center mr-4 glow shadow-lg">
+                                <img src="mvola.png" alt="MVola" class="w-10 h-10 object-contain">
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-gray-800">MVola</h4>
+                                <p class="text-sm text-gray-600">Mobile Money Madagascar</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+
+    <!-- Modal Overlay -->
+    <div id="modal-overlay" class="modal-overlay">
+        <div class="modal-container modal-fade-in">
+            <button class="modal-close" id="modal-close">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                </svg>
+            </button>
+            
+            <div class="modal-header modal-content-fade">
+                <h2 class="modal-title">Confirmation de Paiement</h2>
+                <p class="modal-subtitle">Vérifiez les détails de votre transaction</p>
+            </div>
+            
+            <div class="modal-content modal-content-fade">
+                <div class="space-y-6">
+                    <!-- Payment Amount -->
+                    <div class="p-4 rounded-lg bg-gradient-to-r from-blue-50 to-green-50 border border-blue-200">
+                        <div class="text-center">
+                            <h3 class="text-lg font-semibold text-blue-800 mb-2">Montant à payer</h3>
+                            <div class="text-3xl font-bold text-blue-600 mb-1" id="modal-amount-mga">-</div>
+                            <div class="text-sm text-blue-600">
+                                Équivalent: <span id="modal-amount-usd" class="font-semibold">-</span> USD
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Chosen Payment Method -->
+                    <div class="p-4 rounded-lg bg-gradient-to-r from-green-50 to-emerald-50 border border-green-200">
+                        <div class="text-center">
+                            <h3 class="text-lg font-semibold text-green-800 mb-2">Méthode de paiement</h3>
+                            <div class="text-xl font-bold text-green-600" id="modal-payment-method">-</div>
+                            <div class="text-sm text-green-600" id="modal-payment-network">-</div>
+                        </div>
+                    </div>
+
+                                           <!-- Crypto Address -->
+                       <div class="p-4 rounded-lg bg-black border border-gray-600">
+                           <h3 class="text-lg font-semibold text-white mb-3">Adresse de paiement</h3>
+                           <div class="flex items-center justify-between p-3 bg-gray-800 rounded-lg border border-gray-500">
+                               <span class="text-sm font-mono text-white break-all" id="crypto-address">-</span>
+                               <button id="copy-address" class="ml-3 px-3 py-1 bg-gray-600 hover:bg-gray-700 text-white rounded-md text-sm font-medium transition-colors duration-200 flex items-center">
+                                   <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                                   </svg>
+                                   Copier
+                               </button>
+                           </div>
+
+                           <div id="mvola-warning" class="hidden mt-3 p-2 bg-yellow-900 border border-yellow-600 rounded text-xs text-yellow-200">
+                               <strong>Note:</strong> Le nom sur le numero est: Andry Cedric
+                           </div>
+                       </div>
+
+                    <!-- Instructions -->
+                    <div class="p-4 rounded-lg bg-gradient-to-r from-yellow-50 to-orange-50 border border-yellow-200">
+                        <h3 class="text-lg font-semibold text-yellow-800 mb-3">Instructions</h3>
+                                                   <div class="space-y-2 text-sm text-yellow-700">
+                               <p>1. Effectuez le transfert vers l'adresse ci-dessus</p>
+                               <p>2. Prenez une capture d'écran de la transaction</p>
+                               <p>3. Envoyez la capture d'écran en message privé vers notre compte Facebook ou Telegram</p>
+                           </div>
+                    </div>
+
+                                           <!-- Social Media Buttons -->
+                       <div class="text-center space-y-3">
+                                                       <a href="https://web.facebook.com/haillx666" target="_blank" class="inline-flex items-center px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-lg transition-colors duration-200 shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-200">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-3" fill="currentColor" viewBox="0 0 24 24">
+                                    <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+                                </svg>
+                                Facebook
+                            </a>
+                           
+                           <a href="https://t.me/HardX22" target="_blank" class="inline-flex items-center px-6 py-3 bg-blue-500 hover:bg-blue-600 text-white font-semibold rounded-lg transition-colors duration-200 shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-200">
+                               <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-3" fill="currentColor" viewBox="0 0 24 24">
+                                   <path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/>
+                               </svg>
+                               Telegram
+                           </a>
+                       </div>
+                </div>
+            </div>
+            
+            <div class="modal-actions modal-content-fade">
+                <button class="modal-btn modal-btn-secondary" id="modal-cancel">
+                    Annuler
+                </button>
+                <button class="modal-btn modal-btn-primary" id="modal-confirm">
+                    Confirmer
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Script de base pour la navigation
+        document.addEventListener('DOMContentLoaded', () => {
+            // Back to formation button
+            document.getElementById('back-to-formation').addEventListener('click', () => {
+                window.location.href = '/formation';
+            });
+
+            // Load basic offer data from session storage
+            const selectedOfferName = sessionStorage.getItem('selectedOfferName');
+            const selectedOfferPrice = sessionStorage.getItem('selectedOfferPrice');
+            const userEmail = sessionStorage.getItem('userEmail');
+            const userTelegram = sessionStorage.getItem('userTelegram');
+
+            if (selectedOfferName && selectedOfferPrice) {
+                document.getElementById('offer-name').textContent = selectedOfferName;
+                document.getElementById('user-email').textContent = userEmail || 'Non fourni';
+                document.getElementById('user-telegram').textContent = userTelegram || 'Non fourni';
+                document.getElementById('amount-mga').textContent = new Intl.NumberFormat('fr-MG').format(parseInt(selectedOfferPrice));
+                document.getElementById('payment-title').textContent = `Paiement - ${selectedOfferName}`;
+                
+                // Calculate USD equivalent (approximate rate: 1 USD = 4500 MGA)
+                const exchangeRate = 4500;
+                const amountUSD = (parseInt(selectedOfferPrice) / exchangeRate).toFixed(2);
+                document.getElementById('amount-usd').textContent = amountUSD;
+                document.getElementById('exchange-rate').textContent = `1 USD = ${exchangeRate.toLocaleString('fr-MG')} MGA`;
+            }
+
+            // Modal functionality
+            const modalOverlay = document.getElementById('modal-overlay');
+            const modalClose = document.getElementById('modal-close');
+            const modalCancel = document.getElementById('modal-cancel');
+            const modalConfirm = document.getElementById('modal-confirm');
+
+            // Close modal functions
+            const closeModal = () => {
+                modalOverlay.classList.remove('active');
+                document.body.style.overflow = 'auto';
+            };
+
+            // Close modal event listeners
+            modalClose.addEventListener('click', closeModal);
+            modalCancel.addEventListener('click', closeModal);
+            modalConfirm.addEventListener('click', closeModal);
+
+            // Close modal when clicking outside
+            modalOverlay.addEventListener('click', (e) => {
+                if (e.target === modalOverlay) {
+                    closeModal();
+                }
+            });
+
+            // Close modal with Escape key
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape' && modalOverlay.classList.contains('active')) {
+                    closeModal();
+                }
+            });
+
+            // Add click event to payment methods to open modal
+            document.querySelectorAll('.payment-method').forEach(method => {
+                method.addEventListener('click', () => {
+                    // Remove previous selection
+                    document.querySelectorAll('.payment-method').forEach(m => m.classList.remove('selected'));
+                    // Add selection to clicked method
+                    method.classList.add('selected');
+                    
+                    // Update modal content based on selected method
+                    const methodName = method.querySelector('h4').textContent;
+                    const methodType = method.querySelector('p').textContent;
+                    const cryptoAddress = method.getAttribute('data-address');
+                    
+                    document.querySelector('.modal-title').textContent = `Paiement en ${methodName}`;
+                    document.querySelector('.modal-subtitle').textContent = methodType;
+                    
+                    // Update modal amount and address
+                    document.getElementById('modal-amount-mga').textContent = document.getElementById('amount-mga').textContent;
+                    document.getElementById('modal-amount-usd').textContent = document.getElementById('amount-usd').textContent;
+                    document.getElementById('crypto-address').textContent = cryptoAddress;
+                    
+                    // Update payment method display
+                    document.getElementById('modal-payment-method').textContent = methodName;
+                    document.getElementById('modal-payment-network').textContent = methodType;
+                    
+                    // Show/hide MVola warning
+                    const mvolaWarning = document.getElementById('mvola-warning');
+                    if (methodName === 'MVola') {
+                        mvolaWarning.classList.remove('hidden');
+                    } else {
+                        mvolaWarning.classList.add('hidden');
+                    }
+                    
+                    // Open modal
+                    modalOverlay.classList.add('active');
+                    document.body.style.overflow = 'hidden';
+                });
+            });
+
+            // Copy address functionality
+            document.getElementById('copy-address').addEventListener('click', async () => {
+                const address = document.getElementById('crypto-address').textContent;
+                try {
+                    await navigator.clipboard.writeText(address);
+                    
+                    // Update button text temporarily
+                    const copyBtn = document.getElementById('copy-address');
+                    const originalText = copyBtn.innerHTML;
+                    copyBtn.innerHTML = `
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                        </svg>
+                        Copié !
+                    `;
+                    copyBtn.classList.add('bg-green-100', 'text-green-700', 'hover:bg-green-200');
+                    
+                    setTimeout(() => {
+                        copyBtn.innerHTML = originalText;
+                        copyBtn.classList.remove('bg-green-100', 'text-green-700', 'hover:bg-green-200');
+                    }, 2000);
+                } catch (err) {
+                    console.error('Erreur lors de la copie:', err);
+                }
+            });
+        });
+    </script>
+    
+    <!-- Script responsive pour tous les appareils -->
+    <script src="responsive.js"></script>
+    
+    <!-- Navigation mobile responsive -->
+    <script>
+        // Charger la navigation mobile
+        async function loadMobileNav() {
+            try {
+                const response = await fetch('mobile-nav.html');
+                const html = await response.text();
+                
+                // Insérer la navigation mobile au début du body
+                document.body.insertAdjacentHTML('afterbegin', html);
+                
+                // Initialiser la navigation mobile
+                initMobileNav();
+            } catch (error) {
+                console.log('Navigation mobile chargée avec succès');
+            }
+        }
+        
+        // Initialiser la navigation mobile
+        function initMobileNav() {
+            const hamburger = document.querySelector('.hamburger');
+            const navMenu = document.querySelector('.nav-menu');
+            const navClose = document.querySelector('.nav-close');
+            
+            if (hamburger && navMenu) {
+                hamburger.addEventListener('click', () => {
+                    hamburger.classList.toggle('active');
+                    navMenu.classList.toggle('active');
+                    document.body.style.overflow = navMenu.classList.contains('active') ? 'hidden' : 'auto';
+                });
+                
+                if (navClose) {
+                    navClose.addEventListener('click', () => {
+                        hamburger.classList.remove('active');
+                        navMenu.classList.remove('active');
+                        document.body.style.overflow = 'auto';
+                    });
+                }
+                
+                // Fermer le menu en cliquant sur un lien
+                const navLinks = navMenu.querySelectorAll('.nav-link');
+                navLinks.forEach(link => {
+                    link.addEventListener('click', () => {
+                        hamburger.classList.remove('active');
+                        navMenu.classList.remove('active');
+                        document.body.style.overflow = 'auto';
+                    });
+                });
+            }
+        }
+        
+        // Charger la navigation mobile au chargement de la page
+        document.addEventListener('DOMContentLoaded', loadMobileNav);
+    </script>
+</body>
+</html> 
