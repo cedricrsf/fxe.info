@@ -1047,7 +1047,7 @@
             }
 
             // L'endpoint de votre fonction Netlify
-            const serverEndpoint = 'http://localhost:3000/api/send-email'; // URL locale
+            const serverEndpoint = '/api/confirm-offer'; // API Netlify
 
             try {
                 const response = await fetch(serverEndpoint, {
@@ -1153,7 +1153,7 @@
                 }
 
                 // Envoyer les données au backend
-                const response = await fetch('http://localhost:3000/api/confirm-offer', {
+                const response = await fetch('/api/confirm-offer', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
