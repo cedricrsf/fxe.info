@@ -446,6 +446,38 @@
                 color: black;
             }
         }
+
+        /* Styles pour les illustrations des offres */
+        .offer-illustration {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.1));
+        }
+        
+        .offer-illustration:hover {
+            transform: translateY(-2px) scale(1.05);
+            filter: drop-shadow(0 8px 16px rgba(0, 0, 0, 0.15));
+        }
+        
+        /* Animation subtile pour les graphiques */
+        .chart-line {
+            animation: chartPulse 3s ease-in-out infinite;
+        }
+        
+        @keyframes chartPulse {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 0.6; }
+        }
+        
+        /* Responsive pour les illustrations */
+        @media (max-width: 768px) {
+            .offer-illustration {
+                transform: scale(0.9);
+            }
+            
+            .offer-illustration:hover {
+                transform: scale(0.95);
+            }
+        }
     </style>
 </head>
 <body>
@@ -565,6 +597,22 @@
                             </div>
                             <div class="offer-details-wrapper" id="details-premium">
                                 <p class="text-gray-600 mb-4 md:mb-6 leading-relaxed font-light responsive-offer-description">La formation la plus complète pour devenir un trader expert, de A à Z.</p>
+                                
+                                <!-- Illustration Premium - Trading Chart with Crown -->
+                                <div class="mb-6 md:mb-8 flex justify-center">
+                                    <div class="relative w-24 h-24 md:w-32 md:h-32 bg-gradient-to-br from-blue-500 to-purple-600 rounded-2xl flex items-center justify-center shadow-lg offer-illustration">
+                                        <!-- Crown Icon -->
+                                        <svg class="w-12 h-12 md:w-16 md:h-16 text-white" fill="currentColor" viewBox="0 0 24 24">
+                                            <path d="M12 2L15.09 8.26L22 9L17 14.14L18.18 21L12 17.77L5.82 21L7 14.14L2 9L8.91 8.26L12 2Z"/>
+                                        </svg>
+                                        <!-- Chart Lines -->
+                                        <div class="absolute inset-0 flex items-end justify-center pb-2">
+                                            <svg class="w-16 h-8 text-white/30 chart-line" viewBox="0 0 64 32" fill="none">
+                                                <path d="M4 24L16 16L28 20L40 8L52 12L60 4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                                            </svg>
+                                        </div>
+                                    </div>
+                                </div>
                                 <div class="text-left space-y-2 md:space-y-3 responsive-details-list">
                                     <div class="detail-box responsive-detail-box"><svg class="w-4 h-4 md:w-5 md:h-5 mr-2 responsive-detail-icon" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg><span class="responsive-detail-text">Formation Complète (Base + Analyse Technique + Analyse Fondamentale)</span></div>
                                     <div class="detail-box responsive-detail-box"><svg class="w-4 h-4 md:w-5 md:h-5 mr-2 responsive-detail-icon" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg><span class="responsive-detail-text">Indicateur de Scalping Exclusif</span></div>
@@ -589,6 +637,22 @@
                             </div>
                             <div class="offer-details-wrapper" id="details-scalping">
                                 <p class="text-gray-600 mb-4 md:mb-6 leading-relaxed font-light responsive-offer-description">Concentrez-vous sur des stratégies de scalping rapides et efficaces.</p>
+                                
+                                <!-- Illustration Scalping - Lightning Speed Chart -->
+                                <div class="mb-6 md:mb-8 flex justify-center">
+                                    <div class="relative w-24 h-24 md:w-32 md:h-32 bg-gradient-to-br from-green-500 to-emerald-600 rounded-2xl flex items-center justify-center shadow-lg offer-illustration">
+                                        <!-- Lightning Icon -->
+                                        <svg class="w-12 h-12 md:w-16 md:h-16 text-white" fill="currentColor" viewBox="0 0 24 24">
+                                            <path d="M13 2L3 14H12L11 22L21 10H12L13 2Z"/>
+                                        </svg>
+                                        <!-- Fast Moving Chart -->
+                                        <div class="absolute inset-0 flex items-end justify-center pb-2">
+                                            <svg class="w-16 h-8 text-white/30 chart-line" viewBox="0 0 64 32" fill="none">
+                                                <path d="M4 20L8 16L12 18L16 12L20 14L24 8L28 10L32 6L36 8L40 4L44 6L48 2L52 4L56 0L60 2" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                                            </svg>
+                                        </div>
+                                    </div>
+                                </div>
                                 <div class="text-left space-y-2 md:space-y-3 responsive-details-list">
                                     <div class="detail-box responsive-detail-box"><svg class="w-4 h-4 md:w-5 md:h-5 mr-2 responsive-detail-icon" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg><span class="responsive-detail-text">Stratégies de Scalping RUGA</span></div>
                                     <div class="detail-box responsive-detail-box"><svg class="w-4 h-4 md:w-5 md:h-5 mr-2 responsive-detail-icon" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg><span class="responsive-detail-text">Indicateur RUGA : Votre outil essentiel pour le scalping.</span></div>
@@ -613,6 +677,27 @@
                             </div>
                             <div class="offer-details-wrapper" id="details-tuto">
                                 <p class="text-gray-600 mb-4 md:mb-6 leading-relaxed font-light responsive-offer-description">Accédez à l'intégralité du contenu vidéo de notre formation complète.</p>
+                                
+                                <!-- Illustration Tutorial - Video Play Button -->
+                                <div class="mb-6 md:mb-8 flex justify-center">
+                                    <div class="relative w-24 h-24 md:w-32 md:h-32 bg-gradient-to-br from-purple-500 to-indigo-600 rounded-2xl flex items-center justify-center shadow-lg offer-illustration">
+                                        <!-- Play Button Icon -->
+                                        <svg class="w-12 h-12 md:w-16 md:h-16 text-white" fill="currentColor" viewBox="0 0 24 24">
+                                            <path d="M8 5V19L19 12L8 5Z"/>
+                                        </svg>
+                                        <!-- Video Frame -->
+                                        <div class="absolute inset-2 border-2 border-white/30 rounded-lg"></div>
+                                        <!-- Video Lines -->
+                                        <div class="absolute inset-0 flex items-center justify-center">
+                                            <div class="flex space-x-1">
+                                                <div class="w-1 h-4 bg-white/40 rounded"></div>
+                                                <div class="w-1 h-6 bg-white/40 rounded"></div>
+                                                <div class="w-1 h-3 bg-white/40 rounded"></div>
+                                                <div class="w-1 h-5 bg-white/40 rounded"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                                 <div class="text-left space-y-2 md:space-y-3 responsive-details-list">
                                     <div class="detail-box responsive-detail-box"><svg class="w-4 h-4 md:w-5 md:h-5 mr-2 responsive-detail-icon" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg><span class="responsive-detail-text">Toutes les vidéos de la formation complète.</span></div>
                                     <div class="detail-box responsive-detail-box"><svg class="w-4 h-4 md:w-5 md:h-5 mr-2 responsive-detail-icon" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg><span class="responsive-detail-text">Apprenez à votre rythme.</span></div>
