@@ -1189,11 +1189,11 @@
                 if (userSummaryTelegram) userSummaryTelegram.textContent = telegram;
 
                 // Afficher un message de succès
-                showNotification('Offre confirmée avec succès! Redirection vers le paiement...', 'success');
+                showNotification('Offre confirmée avec succès! Redirection vers la page de paiement...', 'success');
                 
-                // Rediriger vers la section de paiement après un délai
+                // Rediriger vers paiement.html après un délai
                 setTimeout(() => {
-                    showSection(paymentSection, 'forward');
+                    window.location.href = 'paiement.html';
                 }, 2000);
 
             } catch (error) {
