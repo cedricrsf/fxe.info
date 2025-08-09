@@ -38,13 +38,15 @@ if (!process.env.EMAIL_USER || !process.env.EMAIL_PASS) {
     
     const testEmail = {
         from: process.env.EMAIL_USER,
-        to: process.env.EMAIL_USER,
+        to: 'rasolofofoarijaonacedric30@gmail.com',
         subject: '🧪 Test email FXEMPEROR & RUGA',
         html: `
             <h2>🧪 Test de configuration email</h2>
             <p>Si vous recevez cet email, la configuration est correcte !</p>
             <p><strong>Date:</strong> ${new Date().toLocaleString('fr-FR')}</p>
             <p><strong>Environnement:</strong> ${process.env.NODE_ENV || 'développement'}</p>
+            <hr>
+            <p><em>Email envoyé automatiquement depuis l'API FXEMPEROR & RUGA</em></p>
         `
     };
     

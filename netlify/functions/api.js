@@ -1,13 +1,8 @@
 const nodemailer = require('nodemailer');
+const config = require('./config');
 
 // Configuration du transporteur email Gmail
-const transporter = nodemailer.createTransport({
-    service: 'gmail',
-    auth: {
-        user: process.env.EMAIL_USER,
-        pass: process.env.EMAIL_PASS
-    }
-});
+const transporter = nodemailer.createTransport(config.GMAIL_CONFIG);
 
 // Stockage temporaire des données (en production, utilisez une base de données)
 let submissions = [];
@@ -261,24 +256,15 @@ async function sendNotificationEmail(submission) {
         throw new Error('Configuration email manquante: EMAIL_USER et EMAIL_PASS requis');
     }
 
+    const template = config.EMAIL_TEMPLATES.NEW_OFFER(submission);
     const mailOptions = {
         from: process.env.EMAIL_USER,
-        to: process.env.EMAIL_USER, // Notification pour l'admin
-        subject: `🚀 Nouvelle offre confirmée - ${submission.offerName}`,
-        html: `
-            <h2>🎯 Nouvelle offre confirmée</h2>
-            <p><strong>Offre:</strong> ${submission.offerName}</p>
-            <p><strong>Prix:</strong> ${submission.offerPrice} Ar</p>
-            <p><strong>Email:</strong> ${submission.email}</p>
-            <p><strong>Telegram:</strong> ${submission.telegram}</p>
-            <p><strong>Date:</strong> ${new Date(submission.timestamp).toLocaleString('fr-FR')}</p>
-            <p><strong>ID:</strong> ${submission.id}</p>
-            <hr>
-            <p><em>Email envoyé automatiquement depuis l'API FXEMPEROR & RUGA</em></p>
-        `
+        to: config.NOTIFICATION_EMAIL,
+        subject: template.subject,
+        html: template.html
     };
 
-    console.log('📧 Tentative d\'envoi d\'email à:', process.env.EMAIL_USER);
+    console.log('📧 Tentative d\'envoi d\'email à:', config.NOTIFICATION_EMAIL);
     const result = await transporter.sendMail(mailOptions);
     console.log('📧 Email envoyé avec succès:', result.messageId);
     return result;
@@ -286,22 +272,16 @@ async function sendNotificationEmail(submission) {
 
 // Fonction pour envoyer un email de confirmation de paiement
 async function sendPaymentConfirmationEmail(submission) {
+    const template = config.EMAIL_TEMPLATES.PAYMENT_RECEIVED(submission);
     const mailOptions = {
         from: process.env.EMAIL_USER,
-        to: process.env.EMAIL_USER, // Notification pour l'admin
-        subject: `💳 Paiement reçu - ${submission.offerName}`,
-        html: `
-            <h2>💳 Paiement reçu</h2>
-            <p><strong>Offre:</strong> ${submission.offerName}</p>
-            <p><strong>Prix:</strong> ${submission.offerPrice} Ar</p>
-            <p><strong>Email:</strong> ${submission.email}</p>
-            <p><strong>Telegram:</strong> ${submission.telegram}</p>
-            <p><strong>Méthode de paiement:</strong> ${submission.paymentMethod}</p>
-            <p><strong>Preuve de paiement:</strong> ${submission.paymentProof}</p>
-            <p><strong>Date:</strong> ${new Date(submission.timestamp).toLocaleString('fr-FR')}</p>
-            <p><strong>ID:</strong> ${submission.id}</p>
-        `
+        to: config.NOTIFICATION_EMAIL,
+        subject: template.subject,
+        html: template.html
     };
 
-    return transporter.sendMail(mailOptions);
+    console.log('📧 Tentative d\'envoi d\'email de confirmation à:', config.NOTIFICATION_EMAIL);
+    const result = await transporter.sendMail(mailOptions);
+    console.log('📧 Email de confirmation envoyé avec succès:', result.messageId);
+    return result;
 } 
