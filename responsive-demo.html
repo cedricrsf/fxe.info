@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Démo Responsive - FXEMPEROR & RUGA</title>
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Fichiers responsifs -->
+    <link rel="stylesheet" href="responsive.css">
+    
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            margin: 0;
+            padding: 0;
+        }
+        
+        .demo-section {
+            padding: 2rem 1rem;
+            margin: 1rem 0;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .demo-grid {
+            display: grid;
+            gap: 1rem;
+            grid-template-columns: 1fr;
+        }
+        
+        @media (min-width: 768px) {
+            .demo-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        
+        @media (min-width: 1024px) {
+            .demo-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+        
+        .demo-card {
+            background: rgba(255, 255, 255, 0.9);
+            padding: 1.5rem;
+            border-radius: 12px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .demo-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
+        }
+        
+        .device-indicator {
+            position: fixed;
+            top: 1rem;
+            left: 1rem;
+            background: rgba(0, 0, 0, 0.8);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            font-size: 0.875rem;
+            font-weight: 600;
+            z-index: 1000;
+        }
+    </style>
+</head>
+<body>
+    <!-- Indicateur de type d'appareil -->
+    <div class="device-indicator" id="device-indicator">
+        Chargement...
+    </div>
+    
+    <!-- Navigation mobile responsive -->
+    <div id="mobile-nav-placeholder"></div>
+    
+    <!-- Contenu principal -->
+    <div class="container mx-auto px-4 py-8">
+        <header class="text-center mb-12">
+            <h1 class="text-4xl md:text-6xl font-bold text-white mb-4">
+                Démo Responsive
+            </h1>
+            <p class="text-xl text-white/80 max-w-2xl mx-auto">
+                Testez la responsivité du site FXEMPEROR & RUGA sur tous les appareils
+            </p>
+        </header>
+        
+        <!-- Section Grilles Responsives -->
+        <section class="demo-section">
+            <h2 class="text-2xl md:text-3xl font-bold text-white mb-6 text-center">
+                Grilles Responsives
+            </h2>
+            <div class="demo-grid">
+                <div class="demo-card">
+                    <h3 class="text-lg font-semibold mb-2">Carte 1</h3>
+                    <p>Cette carte s'adapte automatiquement à la taille de l'écran.</p>
+                </div>
+                <div class="demo-card">
+                    <h3 class="text-lg font-semibold mb-2">Carte 2</h3>
+                    <p>Sur mobile : 1 colonne, tablette : 2 colonnes, desktop : 3 colonnes.</p>
+                </div>
+                <div class="demo-card">
+                    <h3 class="text-lg font-semibold mb-2">Carte 3</h3>
+                    <p>Testez en redimensionnant votre navigateur !</p>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Section Boutons Responsifs -->
+        <section class="demo-section">
+            <h2 class="text-2xl md:text-3xl font-bold text-white mb-6 text-center">
+                Boutons Responsifs
+            </h2>
+            <div class="flex flex-wrap gap-4 justify-center">
+                <button class="btn-responsive btn-primary-responsive">
+                    Bouton Principal
+                </button>
+                <button class="btn-responsive btn-secondary-responsive">
+                    Bouton Secondaire
+                </button>
+                <button class="btn-responsive">
+                    Bouton Standard
+                </button>
+            </div>
+        </section>
+        
+        <!-- Section Formulaires Responsifs -->
+        <section class="demo-section">
+            <h2 class="text-2xl md:text-3xl font-bold text-white mb-6 text-center">
+                Formulaires Responsifs
+            </h2>
+            <form class="form-responsive max-w-md mx-auto">
+                <div class="form-group-responsive mb-4">
+                    <label for="name" class="block text-white mb-2">Nom</label>
+                    <input type="text" id="name" class="input-responsive w-full" placeholder="Votre nom">
+                </div>
+                <div class="form-group-responsive mb-4">
+                    <label for="email" class="block text-white mb-2">Email</label>
+                    <input type="email" id="email" class="input-responsive w-full" placeholder="votre@email.com">
+                </div>
+                <div class="form-group-responsive mb-6">
+                    <label for="message" class="block text-white mb-2">Message</label>
+                    <textarea id="message" class="input-responsive w-full" rows="4" placeholder="Votre message"></textarea>
+                </div>
+                <button type="submit" class="btn-responsive btn-primary-responsive w-full">
+                    Envoyer
+                </button>
+            </form>
+        </section>
+        
+        <!-- Section Textes Responsifs -->
+        <section class="demo-section">
+            <h2 class="text-2xl md:text-3xl font-bold text-white mb-6 text-center">
+                Typographie Responsive
+            </h2>
+            <div class="text-center space-y-4">
+                <h1 class="heading-responsive text-white">Titre H1 Responsive</h1>
+                <h2 class="heading-responsive text-white/90">Titre H2 Responsive</h2>
+                <h3 class="heading-responsive text-white/80">Titre H3 Responsive</h3>
+                <p class="text-responsive text-white/70 max-w-2xl mx-auto">
+                    Ce paragraphe utilise des classes de texte responsives qui s'adaptent automatiquement 
+                    à la taille de l'écran. La taille de police et l'espacement se modifient selon 
+                    l'appareil utilisé.
+                </p>
+            </div>
+        </section>
+        
+        <!-- Section Utilitaires Responsifs -->
+        <section class="demo-section">
+            <h2 class="text-2xl md:text-3xl font-bold text-white mb-6 text-center">
+                Utilitaires Responsifs
+            </h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="demo-card">
+                    <h3 class="text-lg font-semibold mb-4">Classes d'affichage</h3>
+                    <div class="space-y-2">
+                        <div class="hidden-mobile bg-blue-100 p-2 rounded">Visible sur tablette+</div>
+                        <div class="hidden-tablet bg-green-100 p-2 rounded">Visible sur mobile et desktop</div>
+                        <div class="hidden-desktop bg-yellow-100 p-2 rounded">Visible sur mobile et tablette</div>
+                    </div>
+                </div>
+                <div class="demo-card">
+                    <h3 class="text-lg font-semibold mb-4">Alignement de texte</h3>
+                    <div class="space-y-2">
+                        <p class="text-left-responsive bg-gray-100 p-2 rounded">Texte aligné à gauche</p>
+                        <p class="text-center-responsive bg-gray-100 p-2 rounded">Texte centré</p>
+                        <p class="text-right-responsive bg-gray-100 p-2 rounded">Texte aligné à droite</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Section Animations Responsives -->
+        <section class="demo-section">
+            <h2 class="text-2xl md:text-3xl font-bold text-white mb-6 text-center">
+                Animations Responsives
+            </h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div class="demo-card fade-in-responsive">
+                    <h3 class="text-lg font-semibold mb-2">Fade In</h3>
+                    <p>Cette carte apparaît avec un effet de fondu.</p>
+                </div>
+                <div class="demo-card slide-up-responsive">
+                    <h3 class="text-lg font-semibold mb-2">Slide Up</h3>
+                    <p>Cette carte glisse vers le haut.</p>
+                </div>
+                <div class="demo-card">
+                    <h3 class="text-lg font-semibold mb-2">Standard</h3>
+                    <p>Cette carte n'a pas d'animation spéciale.</p>
+                </div>
+            </div>
+        </section>
+    </div>
+    
+    <!-- Scripts -->
+    <script src="responsive.js"></script>
+    
+    <script>
+        // Détecter le type d'appareil
+        function detectDevice() {
+            const width = window.innerWidth;
+            let device = '';
+            
+            if (width < 768) {
+                device = '📱 Mobile';
+            } else if (width < 1024) {
+                device = '📱 Tablet';
+            } else {
+                device = '💻 Desktop';
+            }
+            
+            document.getElementById('device-indicator').textContent = device;
+        }
+        
+        // Charger la navigation mobile
+        async function loadMobileNav() {
+            try {
+                const response = await fetch('mobile-nav.html');
+                const html = await response.text();
+                document.getElementById('mobile-nav-placeholder').innerHTML = html;
+                initMobileNav();
+            } catch (error) {
+                console.log('Navigation mobile chargée');
+            }
+        }
+        
+        // Initialiser la navigation mobile
+        function initMobileNav() {
+            const hamburger = document.querySelector('.hamburger');
+            const navMenu = document.querySelector('.nav-menu');
+            const navClose = document.querySelector('.nav-close');
+            
+            if (hamburger && navMenu) {
+                hamburger.addEventListener('click', () => {
+                    hamburger.classList.toggle('active');
+                    navMenu.classList.toggle('active');
+                    document.body.style.overflow = navMenu.classList.contains('active') ? 'hidden' : 'auto';
+                });
+                
+                if (navClose) {
+                    navClose.addEventListener('click', () => {
+                        hamburger.classList.remove('active');
+                        navMenu.classList.remove('active');
+                        document.body.style.overflow = 'auto';
+                    });
+                }
+                
+                const navLinks = navMenu.querySelectorAll('.nav-link');
+                navLinks.forEach(link => {
+                    link.addEventListener('click', () => {
+                        hamburger.classList.remove('active');
+                        navMenu.classList.remove('active');
+                        document.body.style.overflow = 'auto';
+                    });
+                });
+            }
+        }
+        
+        // Initialisation
+        document.addEventListener('DOMContentLoaded', () => {
+            detectDevice();
+            loadMobileNav();
+            
+            // Observer les animations
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                    }
+                });
+            });
+            
+            document.querySelectorAll('.fade-in-responsive, .slide-up-responsive').forEach(el => {
+                observer.observe(el);
+            });
+        });
+        
+        // Redétecter lors du redimensionnement
+        window.addEventListener('resize', detectDevice);
+    </script>
+</body>
+</html> 

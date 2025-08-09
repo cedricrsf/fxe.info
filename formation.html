@@ -1,0 +1,1344 @@
+<!DOCTYPE html>
+<html lang="fr" class="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+    <title>FXEMPEROR & RUGA : Votre Formation de Trading</title>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-MGS6JP0S57"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-MGS6JP0S57');
+    </script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="responsive.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        /* Base styles for the entire light theme */
+        body {
+            font-family: 'Inter', sans-serif;
+            line-height: 1.7;
+            background-color: #F8F8F8;
+            color: #1A1A1A;
+            transition: background-color 0.8s ease-in-out, color 0.8s ease-in-out;
+            overflow-x: hidden; /* Prevent horizontal scroll */
+        }
+
+        /* Modern Typography - Fully Responsive */
+        h1, h2, h3 {
+            font-weight: 800;
+            letter-spacing: -0.03em;
+            line-height: 1.1;
+            color: #111111;
+        }
+        
+        /* Responsive font sizes */
+        h1 { 
+            font-size: clamp(2.5rem, 5vw, 4.5rem); /* 2.5rem to 4.5rem */
+        }
+        h2 { 
+            font-size: clamp(2rem, 4vw, 3.5rem); /* 2rem to 3.5rem */
+        }
+        h3 { 
+            font-size: clamp(1.5rem, 3vw, 2.5rem); /* 1.5rem to 2.5rem */
+        }
+
+        /* Hero Section - Responsive Gradient Background */
+        .gradient-hero-bg {
+            background: linear-gradient(135deg, #F8F8F8, #FFFFFF, #F8F8F8);
+            background-size: 400% 400%;
+            animation: gradientAnimation 15s ease infinite;
+            position: relative;
+            overflow: hidden;
+        }
+        @keyframes gradientAnimation {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* Card Styling - Responsive and Touch-Friendly */
+        .card {
+            background-color: #FFFFFF;
+            border: 1px solid #E0E0E0;
+            border-radius: clamp(1rem, 2vw, 1.5rem); /* Responsive border radius */
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+            transition: transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1), box-shadow 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+            position: relative;
+            overflow: hidden;
+            /* Touch-friendly on mobile */
+            touch-action: manipulation;
+        }
+        .card:hover {
+            transform: translateY(-10px) scale(1.01);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15), 0 0 15px rgba(0, 122, 255, 0.2);
+            border-color: #007AFF;
+        }
+
+        /* Primary Button - Responsive and Touch-Friendly */
+        .btn-primary {
+            background-color: #007AFF;
+            color: white;
+            padding: clamp(12px, 2.5vw, 16px) clamp(24px, 4vw, 40px); /* Responsive padding */
+            border-radius: 9999px;
+            font-weight: 700;
+            letter-spacing: 0.03em;
+            text-transform: uppercase;
+            transition: background-color 0.3s ease-in-out, transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+            box-shadow: 0 6px 20px rgba(0, 122, 255, 0.3);
+            border: none;
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+            /* Touch-friendly on mobile */
+            touch-action: manipulation;
+            min-height: 44px; /* Minimum touch target size */
+        }
+        .btn-primary:hover {
+            background-color: #005BB5;
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 8px 25px rgba(0, 122, 255, 0.5);
+        }
+        .btn-primary:active {
+            transform: translateY(-1px) scale(0.98); /* Active state for touch */
+        }
+        .btn-primary::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            transition: width 0.4s ease-out, height 0.4s ease-out;
+            z-index: -1;
+        }
+        .btn-primary:hover::before {
+            width: 180%;
+            height: 180%;
+        }
+
+        /* Specific text colors for light theme - High Contrast */
+        .text-gray-900 { color: #111111; }
+        .text-gray-600 { color: #333333; }
+        .text-gray-700 { color: #222222; }
+        .text-gray-500 { color: #555555; }
+        .text-gray-400 { color: #777777; }
+
+        /* Background colors for light theme */
+        .bg-gray-50 { background-color: #F8F8F8; }
+        .bg-gray-100 { background-color: #F2F2F2; }
+        .border-gray-200 { border-color: #E0E0E0; }
+
+        /* Responsive header and footer */
+        header { 
+            background-color: #FFFFFF; 
+            border-bottom: 1px solid #E0E0E0; 
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            position: sticky;
+            top: 0;
+            z-index: 50;
+        }
+        footer { background-color: #F2F2F2; color: #333333; }
+
+        /* Accent colors for card borders - vibrant on light */
+        .border-premium { border-top-color: #007AFF; }
+        .border-scalping { border-top-color: #34C759; }
+        .border-tuto { border-top-color: #5856D6; }
+
+        .benefit-icon {
+            color: #007AFF;
+            /* Responsive icon sizing */
+            width: clamp(60px, 12vw, 80px);
+            height: clamp(60px, 12vw, 80px);
+        }
+
+        /* Scroll-triggered animations - subtle */
+        .animate-on-scroll {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+        }
+        .animate-on-scroll.is-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Styles for the Mvola code block and crypto address blocks - Responsive */
+        .code-block, .crypto-address-block {
+            background-color: #F0F0F0;
+            color: #000000;
+            padding: clamp(1rem, 3vw, 1.5rem); /* Responsive padding */
+            border-radius: clamp(0.5rem, 1.5vw, 0.75rem); /* Responsive border radius */
+            font-family: 'SF Mono', 'Consolas', 'Monaco', monospace;
+            font-size: clamp(0.9rem, 2.5vw, 1.1rem); /* Responsive font size */
+            font-weight: bold;
+            text-align: center;
+            word-break: break-all;
+            white-space: normal;
+            box-shadow: inset 0 2px 8px rgba(0,0,0,0.05);
+            border: 1px solid #CCCCCC;
+            /* Touch-friendly */
+            touch-action: manipulation;
+        }
+        .code-block {
+            font-size: clamp(1.2rem, 3vw, 1.5rem); /* Responsive for Mvola code */
+        }
+        
+        .btn-copy {
+            background-color: #34C759;
+            color: white;
+            padding: clamp(8px, 2vw, 12px) clamp(16px, 3vw, 24px); /* Responsive padding */
+            border-radius: 9999px;
+            font-weight: 600;
+            transition: background-color 0.3s ease-in-out, transform 0.3s ease-in-out;
+            box-shadow: 0 4px 15px rgba(52, 199, 89, 0.3);
+            min-height: 44px; /* Touch-friendly */
+            touch-action: manipulation;
+        }
+        .btn-copy:hover {
+            background-color: #28A745;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(52, 199, 89, 0.5);
+        }
+        .btn-copy:active {
+            transform: translateY(0); /* Active state for touch */
+        }
+        
+        .alert-box {
+            background-color: #FFFBEB;
+            color: #664400;
+            padding: clamp(1rem, 3vw, 1.5rem); /* Responsive padding */
+            border-radius: clamp(0.5rem, 1.5vw, 0.75rem); /* Responsive border radius */
+            border: 1px solid #FFDDAA;
+            font-weight: 500;
+            text-align: left;
+            box-shadow: 0 0 10px rgba(255,220,0,0.1);
+        }
+        
+        .input-field {
+            padding: clamp(12px, 3vw, 16px) clamp(16px, 4vw, 20px); /* Responsive padding */
+            border-radius: clamp(0.5rem, 1.5vw, 0.75rem); /* Responsive border radius */
+            border: 1px solid #CCCCCC;
+            background-color: #FFFFFF;
+            color: #111111;
+            width: 100%;
+            font-size: clamp(1rem, 2.5vw, 1.1rem); /* Responsive font size */
+            transition: border-color 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+            min-height: 44px; /* Touch-friendly */
+        }
+        .input-field:focus {
+            outline: none;
+            border-color: #007AFF;
+            box-shadow: 0 0 0 4px rgba(0, 122, 255, 0.2);
+        }
+
+        /* Utility for hidden sections */
+        .hidden {
+            display: none;
+        }
+
+        /* Styles for collapsible offer details - Responsive */
+        .offer-details-wrapper {
+            max-height: 0;
+            opacity: 0;
+            overflow: hidden;
+            transition: max-height 0.7s ease-out, opacity 0.7s ease-out;
+            padding-top: 0;
+        }
+        .offer-details-wrapper.is-visible {
+            max-height: 9999px;
+            opacity: 1;
+            padding-top: clamp(1rem, 3vw, 1.5rem); /* Responsive padding */
+        }
+
+        /* Style for individual detail boxes - Responsive */
+        .detail-box {
+            background-color: #F8F8F8;
+            padding: clamp(0.5rem, 2vw, 0.75rem) clamp(0.75rem, 2.5vw, 1rem); /* Responsive padding */
+            border-radius: clamp(0.375rem, 1vw, 0.5rem); /* Responsive border radius */
+            box-shadow: 0 2px 8px rgba(0,0,0,0.03);
+            border: 1px solid #E8E8E8;
+            margin-bottom: clamp(0.5rem, 2vw, 0.75rem); /* Responsive margin */
+            display: flex;
+            align-items: center;
+            font-size: clamp(0.75rem, 2vw, 0.875rem); /* Responsive font size */
+            color: #333333;
+        }
+        .detail-box svg {
+            min-width: clamp(1rem, 2.5vw, 1.25rem); /* Responsive icon size */
+            min-height: clamp(1rem, 2.5vw, 1.25rem);
+            margin-right: clamp(0.5rem, 2vw, 0.75rem); /* Responsive margin */
+            color: #007AFF;
+        }
+        .detail-box:last-child {
+            margin-bottom: 0;
+        }
+
+        /* Price styling when visible - Responsive */
+        .offer-price-block {
+            opacity: 0;
+            max-height: 0;
+            overflow: hidden;
+            transition: opacity 0.7s ease-out 0.3s, max-height 0.7s ease-out;
+        }
+        .offer-price-block.is-visible {
+            opacity: 1;
+            max-height: 200px;
+        }
+
+        /* Slide transition for sections */
+        #app-container {
+            position: relative;
+            overflow: hidden;
+        }
+
+        #app-container > div {
+            transition: transform 0.5s ease-out, opacity 0.5s ease-out;
+            position: absolute;
+            width: 100%;
+            top: 0;
+            left: 0;
+        }
+
+        /* Initial state for hidden sections */
+        #home-section.hidden, #confirmation-section.hidden, #payment-section.hidden, #privacy-policy-section.hidden {
+            transform: translateX(100%);
+            opacity: 0;
+        }
+
+        /* Active state for visible section */
+        #home-section:not(.hidden), #confirmation-section:not(.hidden), #payment-section:not(.hidden), #privacy-policy-section:not(.hidden) {
+            transform: translateX(0);
+            opacity: 1;
+        }
+
+        /* Back button styling - Responsive and Touch-Friendly */
+        .btn-back {
+            position: absolute;
+            top: clamp(1rem, 3vw, 1.5rem); /* Responsive positioning */
+            left: clamp(1rem, 3vw, 1.5rem);
+            padding: clamp(0.5rem, 2vw, 0.75rem); /* Responsive padding */
+            border-radius: 9999px;
+            background-color: #F2F2F2;
+            color: #333333;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            transition: background-color 0.3s ease-in-out, transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+            z-index: 20;
+            min-width: 44px; /* Touch-friendly */
+            min-height: 44px;
+            touch-action: manipulation;
+        }
+        .btn-back:hover {
+            background-color: #E0E0E0;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+        .btn-back:active {
+            transform: translateY(0); /* Active state for touch */
+        }
+
+        /* Mobile-specific optimizations */
+        @media (max-width: 768px) {
+            /* Ensure proper spacing on mobile */
+            .container {
+                padding-left: 1rem;
+                padding-right: 1rem;
+            }
+            
+            /* Stack elements vertically on mobile */
+            .mobile-stack {
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
+            }
+            
+            /* Adjust grid layouts for mobile */
+            .mobile-grid-1 {
+                grid-template-columns: 1fr;
+            }
+            
+            /* Ensure buttons are touch-friendly */
+            .btn-primary, .btn-copy, .btn-back {
+                min-height: 48px;
+                min-width: 48px;
+            }
+            
+            /* Optimize text sizes for mobile */
+            .mobile-text-sm {
+                font-size: 0.875rem;
+            }
+            
+            .mobile-text-base {
+                font-size: 1rem;
+            }
+            
+            .mobile-text-lg {
+                font-size: 1.125rem;
+            }
+        }
+
+        /* Tablet-specific optimizations */
+        @media (min-width: 769px) and (max-width: 1024px) {
+            /* Medium spacing for tablets */
+            .container {
+                padding-left: 1.5rem;
+                padding-right: 1.5rem;
+            }
+            
+            /* Optimize grid layouts for tablets */
+            .tablet-grid-2 {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        /* Large screen optimizations */
+        @media (min-width: 1025px) {
+            /* Larger spacing for desktop */
+            .container {
+                padding-left: 2rem;
+                padding-right: 2rem;
+            }
+            
+            /* Optimize for large screens */
+            .desktop-grid-4 {
+                grid-template-columns: repeat(4, 1fr);
+            }
+        }
+
+        /* High DPI displays */
+        @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+            /* Ensure crisp images on retina displays */
+            img {
+                image-rendering: -webkit-optimize-contrast;
+                image-rendering: crisp-edges;
+            }
+        }
+
+        /* Landscape orientation on mobile */
+        @media (max-width: 768px) and (orientation: landscape) {
+            /* Adjust spacing for landscape mobile */
+            .py-24 {
+                padding-top: 3rem;
+                padding-bottom: 3rem;
+            }
+            
+            .py-20 {
+                padding-top: 2.5rem;
+                padding-bottom: 2.5rem;
+            }
+        }
+
+        /* Print styles */
+        @media print {
+            /* Hide non-essential elements when printing */
+            .btn-primary, .btn-copy, .btn-back {
+                display: none;
+            }
+            
+            /* Ensure good contrast for printing */
+            body {
+                background: white;
+                color: black;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header class="shadow-sm py-3 md:py-5">
+        <nav class="container mx-auto px-4 md:px-6 flex justify-between items-center">
+            <a href="#" class="flex items-center">
+                <img src="header.jpg" alt="Logo FXEMPEROR & RUGA" class="w-16 h-16 md:w-20 md:h-20 rounded-xl mr-3 md:mr-4 object-cover shadow-lg border-2 border-blue-200 hover:border-blue-400 transition-all duration-300">
+                <div class="flex flex-col">
+                    <span class="text-2xl md:text-3xl lg:text-4xl font-extrabold text-gray-900 tracking-tight">FXEMPEROR</span>
+                    <span class="text-base md:text-lg lg:text-xl font-semibold text-blue-600 tracking-wide">& RUGA</span>
+                </div>
+            </a>
+            <!-- Mobile menu button -->
+            <button id="mobile-menu-btn" class="md:hidden p-2 rounded-lg hover:bg-gray-100 transition-colors">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                </svg>
+            </button>
+            <!-- Desktop navigation -->
+            <div class="hidden md:flex space-x-6 lg:space-x-8">
+                <a href="#offres" class="text-gray-600 hover:text-gray-900 font-medium transition duration-300">Nos Offres</a>
+                <a href="#contact" class="text-gray-600 hover:text-gray-900 font-medium transition duration-300">Contact</a>
+            </div>
+        </nav>
+        <!-- Mobile navigation menu -->
+        <div id="mobile-menu" class="hidden md:hidden bg-white border-t border-gray-200 px-4 py-2">
+            <div class="flex flex-col space-y-3">
+                <a href="#offres" class="text-gray-600 hover:text-gray-900 font-medium transition duration-300 py-2 px-3 rounded-lg hover:bg-gray-50">Nos Offres</a>
+                <a href="#contact" class="text-gray-600 hover:text-gray-900 font-medium transition duration-300 py-2 px-3 rounded-lg hover:bg-gray-50">Contact</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content Area - Will dynamically switch between sections -->
+    <div id="app-container" class="relative">
+        <!-- Home Section -->
+        <div id="home-section" class="responsive-section">
+            <section class="gradient-hero-bg text-gray-900 py-8 md:py-16 lg:py-24 xl:py-32 text-center rounded-b-3xl shadow-lg relative responsive-hero">
+                <div class="container mx-auto px-4 md:px-6 animate-fade-in relative z-10 responsive-container">
+                    <h1 class="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-extrabold leading-tight mb-4 md:mb-6 lg:mb-8 px-2 responsive-title">
+                        Maîtrisez l'Art du Trading et Générez des Revenus !
+                    </h1>
+                    <p class="text-base sm:text-lg md:text-xl lg:text-2xl mb-6 md:mb-8 lg:mb-12 max-w-4xl mx-auto opacity-90 font-light text-gray-600 px-4 responsive-text">
+                        Devenez un trader confiant et rentable grâce à nos formations complètes et nos outils exclusifs, conçus pour les marchés d'aujourd'hui.
+                    </p>
+                    <a href="#offres" class="btn-primary inline-block text-base md:text-lg lg:text-xl responsive-btn">
+                        Découvrez Nos Formations
+                    </a>
+                </div>
+            </section>
+
+            <section class="py-8 md:py-16 lg:py-20 xl:py-32 bg-gray-100 rounded-xl mx-auto my-4 md:my-8 lg:my-16 shadow-lg max-w-7xl px-4 md:px-6 animate-on-scroll responsive-section">
+                <div class="container mx-auto text-center responsive-container">
+                    <h2 class="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-8 md:mb-12 lg:mb-16 text-gray-900 px-2 responsive-title">Transformez Votre Façon de Trader</h2>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6 lg:gap-8 xl:gap-12 responsive-grid">
+                        <div class="p-4 md:p-6 lg:p-8 rounded-xl bg-gray-50 shadow-sm flex flex-col items-center text-center transition duration-300 hover:shadow-md responsive-card">
+                            <!-- SVG for Expertise Avancée - Brain with Chart -->
+                            <svg xmlns="http://www.w3.org/2000/svg" class="benefit-icon mb-3 md:mb-4 lg:mb-6 rounded-full p-2 responsive-icon" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M9.5 2A2.5 2.5 0 0 1 12 4.5v15a2.5 2.5 0 0 1-4.96.44 2.5 2.5 0 0 1-2.96-3.23 3 3 0 0 1-.34-5.58 2.5 2.5 0 0 1 1.32-4.24 2.5 2.5 0 0 1 1.98-3A2.5 2.5 0 0 1 9.5 2Z"/>
+                                <path d="M14.5 2A2.5 2.5 0 0 0 12 4.5v15a2.5 2.5 0 0 0 4.96.44 2.5 2.5 0 0 0 2.96-3.23 3 3 0 0 0 .34-5.58 2.5 2.5 0 0 0-1.32-4.24 2.5 2.5 0 0 0-1.98-3A2.5 2.5 0 0 0 14.5 2Z"/>
+                                <path d="M8 8h8"/>
+                                <path d="M8 12h8"/>
+                                <path d="M8 16h8"/>
+                            </svg>
+                            <h3 class="text-lg md:text-xl lg:text-2xl font-semibold mb-2 md:mb-3 text-gray-900 responsive-card-title">Expertise Avancée</h3>
+                            <p class="text-sm md:text-base text-gray-600 leading-relaxed font-light responsive-card-text">Accédez à des stratégies éprouvées et des analyses de pointe en trading.</p>
+                        </div>
+                        <div class="p-4 md:p-6 lg:p-8 rounded-xl bg-gray-50 shadow-sm flex flex-col items-center text-center transition duration-300 hover:shadow-md responsive-card">
+                            <!-- SVG for Outils Exclusifs - Gauge with Settings -->
+                            <svg xmlns="http://www.w3.org/2000/svg" class="benefit-icon mb-3 md:mb-4 lg:mb-6 rounded-full p-2 responsive-icon" style="background: linear-gradient(135deg, #34C759 0%, #30D158 100%); color: white;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M12 2v10"/>
+                                <path d="m2 12 1.5-1.5"/>
+                                <path d="M20.5 12 22 10.5"/>
+                                <path d="m2 12 1.5 1.5"/>
+                                <path d="M20.5 12 22 13.5"/>
+                                <path d="M12 22v-10"/>
+                                <path d="m12 22-1.5-1.5"/>
+                                <path d="m12 22 1.5-1.5"/>
+                                <circle cx="12" cy="12" r="4"/>
+                            </svg>
+                            <h3 class="text-lg md:text-xl lg:text-2xl font-semibold mb-2 md:mb-3 text-gray-900 responsive-card-title">Outils Exclusifs</h3>
+                            <p class="text-sm md:text-base text-gray-600 leading-relaxed font-light responsive-card-text">Bénéficiez d'indicateurs de scalping uniques comme l'Indicateur RUGA.</p>
+                        </div>
+                        <div class="p-4 md:p-6 lg:p-8 rounded-xl bg-gray-50 shadow-sm flex flex-col items-center text-center transition duration-300 hover:shadow-md responsive-card">
+                            <!-- SVG for Apprentissage Pratique - Target with Arrow -->
+                            <svg xmlns="http://www.w3.org/2000/svg" class="benefit-icon mb-3 md:mb-4 lg:mb-6 rounded-full p-2 responsive-icon" style="background: linear-gradient(135deg, #FF6B35 0%, #F7931E 100%); color: white;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                                <circle cx="12" cy="12" r="10"/>
+                                <circle cx="12" cy="12" r="6"/>
+                                <circle cx="12" cy="12" r="2"/>
+                            </svg>
+                            <h3 class="text-lg md:text-xl lg:text-2xl font-semibold mb-2 md:mb-3 text-gray-900 responsive-card-title">Apprentissage Pratique</h3>
+                            <p class="text-sm md:text-base text-gray-600 leading-relaxed font-light responsive-card-text">De la théorie à la pratique avec des modules clairs et un suivi personnalisé.</p>
+                        </div>
+                        <div class="p-4 md:p-6 lg:p-8 rounded-xl bg-gray-50 shadow-sm flex flex-col items-center text-center transition duration-300 hover:shadow-md responsive-card">
+                            <!-- SVG for Indépendance Financière - Trending Up with Dollar -->
+                            <svg xmlns="http://www.w3.org/2000/svg" class="benefit-icon mb-3 md:mb-4 lg:mb-6 rounded-full p-2 responsive-icon" style="background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%); color: white;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                                <polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/>
+                                <polyline points="16 7 22 7 22 13"/>
+                            </svg>
+                            <h3 class="text-lg md:text-xl lg:text-2xl font-semibold mb-2 md:mb-3 text-gray-900 responsive-card-title">Indépendance Financière</h3>
+                            <p class="text-sm md:text-base text-gray-600 leading-relaxed font-light responsive-card-text">Acquérez les compétences pour prendre le contrôle de vos investissements.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="offres" class="py-8 md:py-16 lg:py-20 xl:py-32 bg-gray-100 rounded-xl mx-auto my-4 md:my-8 lg:my-16 shadow-lg max-w-7xl px-4 md:px-6 animate-on-scroll responsive-section">
+                <div class="container mx-auto text-center responsive-container">
+                    <h2 class="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-8 md:mb-12 lg:mb-16 text-gray-900 px-2 responsive-title">Choisissez la Formation Qui Vous Correspond</h2>
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6 lg:gap-8 xl:gap-12 responsive-grid">
+
+                        <!-- PREMIUM Offer Card -->
+                        <div class="card border-t-8 border-premium responsive-offer-card">
+                            <div class="mb-4 md:mb-6 lg:mb-8">
+                                <img src="https://placehold.co/150x100/F8F8F8/007AFF?text=PREMIUM+Elegance" alt="Illustration Pack PREMIUM" class="mx-auto mb-3 md:mb-4 lg:mb-6 rounded-lg w-full max-w-xs responsive-offer-image">
+                            </div>
+                            <div class="offer-details-wrapper" id="details-premium">
+                                <p class="text-gray-600 mb-4 md:mb-6 leading-relaxed font-light responsive-offer-description">La formation la plus complète pour devenir un trader expert, de A à Z.</p>
+                                <div class="text-left space-y-2 md:space-y-3 responsive-details-list">
+                                    <div class="detail-box responsive-detail-box"><svg class="w-4 h-4 md:w-5 md:h-5 mr-2 responsive-detail-icon" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg><span class="responsive-detail-text">Formation Complète (Base + Analyse Technique + Analyse Fondamentale)</span></div>
+                                    <div class="detail-box responsive-detail-box"><svg class="w-4 h-4 md:w-5 md:h-5 mr-2 responsive-detail-icon" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg><span class="responsive-detail-text">Indicateur de Scalping Exclusif</span></div>
+                                    <div class="detail-box responsive-detail-box"><svg class="w-4 h-4 md:w-5 md:h-5 mr-2 responsive-detail-icon" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg><span class="responsive-detail-text">Copie Trading : Répliquez les stratégies de traders expérimentés.</span></div>
+                                    <div class="detail-box responsive-detail-box"><svg class="w-4 h-4 md:w-5 md:h-5 mr-2 responsive-detail-icon" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg><span class="responsive-detail-text">Suivi Personnalisé : Accompagnement continu.</span></div>
+                                    <div class="detail-box responsive-detail-box"><svg class="w-4 h-4 md:w-5 md:h-5 mr-2 responsive-detail-icon" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg><span class="responsive-detail-text">Formation 100% en ligne sur Telegram</span></div>
+                                </div>
+                                <div class="mt-4 md:mt-6 offer-price-block" id="price-premium">
+                                    <p class="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-2 responsive-price">990.000 Ar</p>
+                                    <p class="text-lg md:text-xl text-gray-600 mb-4 md:mb-6 font-light responsive-price-subtitle">(~ 220 USD)</p>
+                                </div>
+                            </div>
+                            <div class="mt-auto pt-4 md:pt-6">
+                                <button class="btn-primary w-full block text-center toggle-offer-btn responsive-offer-btn" data-target="premium" data-price="990000" data-action="discover">Découvrir l'offre</button>
+                            </div>
+                        </div>
+
+                        <!-- SCALPING Offer Card -->
+                        <div class="card border-t-8 border-scalping responsive-offer-card">
+                            <div class="mb-4 md:mb-6 lg:mb-8">
+                                <img src="https://placehold.co/150x100/F8F8F8/34C759?text=SCALPING+Precision" alt="Illustration Super Scalping" class="mx-auto mb-3 md:mb-4 lg:mb-6 rounded-lg w-full max-w-xs responsive-offer-image">
+                            </div>
+                            <div class="offer-details-wrapper" id="details-scalping">
+                                <p class="text-gray-600 mb-4 md:mb-6 leading-relaxed font-light responsive-offer-description">Concentrez-vous sur des stratégies de scalping rapides et efficaces.</p>
+                                <div class="text-left space-y-2 md:space-y-3 responsive-details-list">
+                                    <div class="detail-box responsive-detail-box"><svg class="w-4 h-4 md:w-5 md:h-5 mr-2 responsive-detail-icon" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg><span class="responsive-detail-text">Stratégies de Scalping RUGA</span></div>
+                                    <div class="detail-box responsive-detail-box"><svg class="w-4 h-4 md:w-5 md:h-5 mr-2 responsive-detail-icon" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg><span class="responsive-detail-text">Indicateur RUGA : Votre outil essentiel pour le scalping.</span></div>
+                                    <div class="detail-box responsive-detail-box"><svg class="w-4 h-4 md:w-5 md:h-5 mr-2 responsive-detail-icon" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg><span class="responsive-detail-text">Copie Trading : Profitez des meilleures performances.</span></div>
+                                    <div class="detail-box responsive-detail-box"><svg class="w-4 h-4 md:w-5 md:h-5 mr-2 responsive-detail-icon" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg><span class="responsive-detail-text">Suivi : Accompagnement dédié sur ces techniques.</span></div>
+                                    <div class="detail-box responsive-detail-box"><svg class="w-4 h-4 md:w-5 md:h-5 mr-2 responsive-detail-icon" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg><span class="responsive-detail-text">Formation 100% en ligne sur Telegram</span></div>
+                                </div>
+                                <div class="mt-4 md:mt-6 offer-price-block" id="price-scalping">
+                                    <p class="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-2 responsive-price">550.000 Ar</p>
+                                    <p class="text-lg md:text-xl text-gray-600 mb-4 md:mb-6 font-light responsive-price-subtitle">(~ 122 USD)</p>
+                                </div>
+                            </div>
+                            <div class="mt-auto pt-4 md:pt-6">
+                                <button class="btn-primary w-full block text-center toggle-offer-btn responsive-offer-btn" data-target="scalping" data-price="550000" data-action="discover">Découvrir l'offre</button>
+                            </div>
+                        </div>
+
+                        <!-- TUTO Offer Card -->
+                        <div class="card border-t-8 border-tuto responsive-offer-card">
+                            <div class="mb-4 md:mb-6 lg:mb-8">
+                                <img src="https://placehold.co/150x100/F8F8F8/5856D6?text=TUTORIAL+Clarity" alt="Illustration Simple Tuto" class="mx-auto mb-3 md:mb-4 lg:mb-6 rounded-lg w-full max-w-xs responsive-offer-image">
+                            </div>
+                            <div class="offer-details-wrapper" id="details-tuto">
+                                <p class="text-gray-600 mb-4 md:mb-6 leading-relaxed font-light responsive-offer-description">Accédez à l'intégralité du contenu vidéo de notre formation complète.</p>
+                                <div class="text-left space-y-2 md:space-y-3 responsive-details-list">
+                                    <div class="detail-box responsive-detail-box"><svg class="w-4 h-4 md:w-5 md:h-5 mr-2 responsive-detail-icon" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg><span class="responsive-detail-text">Toutes les vidéos de la formation complète.</span></div>
+                                    <div class="detail-box responsive-detail-box"><svg class="w-4 h-4 md:w-5 md:h-5 mr-2 responsive-detail-icon" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg><span class="responsive-detail-text">Apprenez à votre rythme.</span></div>
+                                    <div class="detail-box responsive-detail-box"><svg class="w-4 h-4 md:w-5 md:h-5 mr-2 responsive-detail-icon text-gray-500" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd"></path></svg><span class="responsive-detail-text text-gray-500 font-light">Pas de suivi personnalisé inclus.</span></div>
+                                    <div class="detail-box responsive-detail-box"><svg class="w-4 h-4 md:w-5 md:h-5 mr-2 responsive-detail-icon" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 00l4-4z" clip-rule="evenodd"></path></svg><span class="responsive-detail-text">Formation 100% en ligne sur Telegram</span></div>
+                                </div>
+                                <div class="mt-4 md:mt-6 offer-price-block" id="price-tuto">
+                                    <p class="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-2 responsive-price">250.000 Ar</p>
+                                    <p class="text-lg md:text-xl text-gray-600 mb-4 md:mb-6 font-light responsive-price-subtitle">(~ 56 USD)</p>
+                                </div>
+                            </div>
+                            <div class="mt-auto pt-4 md:pt-6">
+                                <button class="btn-primary w-full block text-center toggle-offer-btn responsive-offer-btn" data-target="tuto" data-price="250000" data-action="discover">Découvrir l'offre</button>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </section>
+
+            <section class="py-8 md:py-16 lg:py-20 xl:py-32 bg-gray-100 rounded-xl mx-auto my-4 md:my-8 lg:my-16 shadow-lg max-w-7xl px-4 md:px-6 animate-on-scroll responsive-section">
+                <div class="container mx-auto text-center responsive-container">
+                    <h2 class="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-8 md:mb-12 lg:mb-16 text-gray-900 px-2 responsive-title">L'Expertise Derrière FXEMPEROR & RUGA</h2>
+                    <div class="max-w-4xl mx-auto flex flex-col md:flex-row items-center justify-center gap-6 md:gap-8 lg:gap-10 responsive-expertise">
+                        <img src="elhardy.jpg" alt="Portrait de EL HARDY" class="rounded-full border-4 border-blue-500 shadow-lg mb-4 md:mb-6 lg:mb-0 w-32 h-32 md:w-40 md:h-40 lg:w-48 lg:h-48 object-cover responsive-expertise-image">
+                        <div class="responsive-expertise-content">
+                            <h3 class="text-2xl md:text-3xl font-semibold mb-4 md:mb-6 text-gray-900 responsive-expertise-name">EL HARDY</h3>
+                            <p class="text-gray-700 leading-relaxed text-base md:text-lg font-light responsive-expertise-description">
+                                Avec des années d'expérience sur les marchés financiers, notre mission est de démystifier le trading et de rendre l'indépendance financière accessible à tous. Nous croyons en une approche pédagogique claire, pratique et axée sur les résultats, en fournissant à nos étudiants les connaissances et les outils nécessaires pour réussir. Notre passion est de vous voir atteindre vos objectifs de trading.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="py-8 md:py-16 lg:py-20 xl:py-32 bg-gray-100 rounded-xl mx-auto my-4 md:my-8 lg:my-16 shadow-lg max-w-7xl px-4 md:px-6 animate-on-scroll responsive-section">
+                <div class="container mx-auto text-center responsive-container">
+                    <h2 class="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-8 md:mb-12 lg:mb-16 text-gray-900 px-2 responsive-title">Des Questions ? Nous Avons Les Réponses.</h2>
+                    <div class="max-w-4xl mx-auto text-left space-y-6 md:space-y-8 responsive-faq">
+                        <div class="border-b border-gray-200 pb-4 md:pb-6 responsive-faq-item">
+                            <h3 class="text-xl md:text-2xl font-semibold text-gray-900 mb-2 md:mb-3 flex items-center responsive-faq-question">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" class="md:w-6 md:h-6 mr-2 md:mr-3 responsive-faq-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <circle cx="12" cy="12" r="10"/>
+                                    <path d="M9.09 9a3 3 0 0 1 5.818 0c0 2-3 3-3 3"/>
+                                    <path d="M12 17h.01"/>
+                                </svg>
+                                Quel niveau est requis pour suivre la formation ?</h3>
+                            <p class="text-gray-700 text-base md:text-lg leading-relaxed font-light responsive-faq-answer">Nos formations sont conçues pour s'adapter à tous les niveaux, du débutant complet à l'intermédiaire souhaitant affiner ses stratégies. Le pack PREMIUM couvre toutes les bases.</p>
+                        </div>
+                        <div class="border-b border-gray-200 pb-4 md:pb-6 responsive-faq-item">
+                            <h3 class="text-xl md:text-2xl font-semibold text-gray-900 mb-2 md:mb-3 flex items-center responsive-faq-question">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" class="md:w-6 md:h-6 mr-2 md:mr-3 responsive-faq-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <rect width="20" height="14" x="2" y="5" rx="2"/>
+                                    <line x1="2" x2="22" y1="10" y2="10"/>
+                                </svg>
+                                Comment s'effectue le paiement ?</h3>
+                            <p class="text-gray-700 text-base md:text-lg leading-relaxed font-light responsive-faq-answer">Les paiements peuvent être effectués via **USDT**, **BTC (Bitcoin)**, et **ETH (Ethereum)**. Toutes les informations vous seront fournies lors de l'inscription.</p>
+                        </div>
+                        <div class="border-b border-gray-200 pb-4 md:pb-6 responsive-faq-item">
+                            <h3 class="text-xl md:text-2xl font-semibold text-gray-900 mb-2 md:mb-3 flex items-center responsive-faq-question">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 md:h-6 md:w-6 mr-2 md:mr-3 responsive-faq-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                    <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
+                                    <path d="m9 11 3 3L22 4"/>
+                                </svg>
+                                Le suivi est-il illimité ?</h3>
+                            <p class="text-gray-700 text-base md:text-lg leading-relaxed font-light responsive-faq-answer">Le suivi est inclus dans les offres PREMIUM et Super Scalping & Copie Trading et se poursuit jusqu'à ce que vous ayez atteint votre autonomie en trading. Nous nous engageons à vous accompagner pleinement dans votre parcours.</p>
+                        </div>
+                        </div>
+                </div>
+            </section>
+
+            <section id="contact" class="py-8 md:py-16 lg:py-20 xl:py-32 bg-gray-100 rounded-xl mx-auto my-4 md:my-8 lg:my-16 shadow-lg max-w-7xl px-4 md:px-6 animate-on-scroll responsive-section">
+                <div class="container mx-auto text-center responsive-container">
+                    <h2 class="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-8 md:mb-12 lg:mb-16 text-gray-900 px-2 responsive-title">Pour d'autre question ou remarque.</h2>
+                    <div class="max-w-xl mx-auto p-6 md:p-8 rounded-lg bg-gray-50 shadow-md responsive-contact-card">
+                        <p class="mb-6 md:mb-8 text-lg md:text-xl text-gray-700 leading-relaxed font-light responsive-contact-description">
+                            N'hésitez pas à nous contacter via nos réseaux sociaux ou par e-mail.
+                        </p>
+                        <div class="flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-4 md:space-x-6 mt-4 md:mt-6 mb-6 md:mb-8 responsive-contact-buttons">
+                            <a href="https://t.me/HardX22" target="_blank" class="btn-primary px-6 md:px-8 py-3 md:py-4 text-base md:text-lg hover:scale-105 transition-transform duration-300 responsive-contact-btn">
+                                Support Telegram
+                            </a>
+                            <a href="https://web.facebook.com/haillx666" target="_blank" class="btn-primary px-6 md:px-8 py-3 md:py-4 text-base md:text-lg hover:scale-105 transition-transform duration-300 responsive-contact-btn" style="background-color: #1877F2;">
+                                Support Facebook
+                            </a>
+                        </div>
+                        <p class="text-base md:text-lg text-gray-600 font-light responsive-contact-email">Ou par e-mail : <a href="mailto:cedricrsf@gmail.com" class="text-blue-500 hover:underline font-medium">cedricrsf@gmail.com</a></p>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- Confirmation Section (Initially Hidden) -->
+        <div id="confirmation-section" class="hidden">
+            <button id="back-to-home-from-confirm" class="btn-back">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" />
+                </svg>
+            </button>
+            <div class="flex items-center justify-center min-h-screen p-6">
+                <div class="bg-white p-8 md:p-12 rounded-xl shadow-lg max-w-2xl w-full text-center">
+                    <h1 class="text-3xl md:text-4xl font-bold text-gray-900 mb-8">Confirmez Votre Offre</h1>
+
+                    <div class="mb-8">
+                        <p class="text-xl text-gray-700 mb-4">Vous avez choisi l'offre : <span id="offer-name" class="font-semibold text-blue-600"></span></p>
+                        <p class="text-2xl font-bold text-gray-900">Montant à payer : <span id="offer-price" class="text-blue-500"></span> Ar</p>
+                    </div>
+
+                    <form id="confirmation-form" class="space-y-6">
+                        <div>
+                            <label for="email" class="block text-left text-gray-700 text-lg font-medium mb-2">Votre adresse email :</label>
+                            <input type="email" id="email" name="email" required class="input-field" placeholder="exemple@domaine.com">
+                        </div>
+                        <div>
+                            <label for="telegram" class="block text-left text-gray-700 text-lg font-medium mb-2">Votre numéro Telegram (avec indicatif pays) :</label>
+                            <input type="text" id="telegram" name="telegram" required class="input-field" placeholder="+261xxxxxxxx">
+                        </div>
+                        
+                        <div class="alert-box">
+                            <p class="text-lg font-semibold text-orange-600 mb-2">⚠️ IMPORTANT :</p>
+                            <p class="text-gray-700">La possession d'un compte Telegram est <strong>obligatoire</strong> pour accéder à la formation. Si vous n'avez pas de compte Telegram, veuillez contacter le support pour d'autres alternatives :</p>
+                            <div class="mt-4 flex justify-center space-x-4">
+                                <a href="https://t.me/HardX22" target="_blank" class="btn-primary px-6 py-3 text-base hover:scale-105 transition-transform duration-300">
+                                    Support Telegram
+                                </a>
+                                <a href="https://web.facebook.com/haillx666" target="_blank" class="btn-primary px-6 py-3 text-base hover:scale-105 transition-transform duration-300" style="background-color: #1877F2;">
+                                    Support Facebook
+                                </a>
+                            </div>
+                        </div>
+                        
+                        <button type="submit" class="btn-primary w-full mt-6">Confirmer la Transaction</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- Payment Section (Initially Hidden) -->
+        <div id="payment-section" class="hidden">
+            <button id="back-to-confirm-from-payment" class="btn-back">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" />
+                </svg>
+            </button>
+            <div class="flex items-center justify-center min-h-screen p-6">
+                <div class="bg-white p-8 md:p-12 rounded-xl shadow-lg max-w-2xl w-full text-center">
+                    <h1 class="text-3xl md:text-4xl font-bold text-gray-900 mb-8">Effectuez Votre Paiement</h1>
+
+                    <div class="space-y-8">
+
+
+                        <!-- USDT (TRC20) Payment Option -->
+                        <div>
+                            <p class="text-xl text-gray-700 mb-4">Paiement via USDT (TRC20) :</p>
+                            <div class="crypto-address-block" id="usdt-address">
+                                TGeGiSR2sPbr8ehvD3BCGTkEZ4sd7hn4QE
+                            </div>
+                            <button class="btn-copy mt-6 copy-address-btn" data-address-id="usdt-address">Copier l'adresse</button>
+                        </div>
+
+                        <!-- BTC Payment Option -->
+                        <div>
+                            <p class="text-xl text-gray-700 mb-4">Paiement via BTC (Bitcoin) :</p>
+                            <div class="crypto-address-block" id="btc-address">
+                                1FMQ5jhhvgogJ9x4UxBJtDdy7gJDESrp41
+                            </div>
+                            <button class="btn-copy mt-6 copy-address-btn" data-address-id="btc-address">Copier l'adresse</button>
+                        </div>
+
+                        <!-- ETH (ERC20) Payment Option -->
+                        <div>
+                            <p class="text-xl text-gray-700 mb-4">Paiement via ETH (ERC20) :</p>
+                            <div class="crypto-address-block" id="eth-address">
+                                0x1BDb2cD41Cb1858aEF7f4c3635059e0a08c39463
+                            </div>
+                            <button class="btn-copy mt-6 copy-address-btn" data-address-id="eth-address">Copier l'adresse</button>
+                        </div>
+
+                        <!-- SOL Payment Option -->
+                        <div>
+                            <p class="text-xl text-gray-700 mb-4">Paiement via SOL (Solana) :</p>
+                            <div class="crypto-address-block" id="sol-address">
+                                Hw7J45Pkky281RxQJg7t1tERZPdFBHn44iCjyp3WRo3Q
+                            </div>
+                            <button class="btn-copy mt-6 copy-address-btn" data-address-id="sol-address">Copier l'adresse</button>
+                        </div>
+                    </div>
+
+                    <div class="alert-box mt-10">
+                        <p class="text-xl font-bold mb-3">NOTIFICATION TRÈS IMPORTANTE :</p>
+                        <p class="text-lg mb-4">Après avoir effectué le paiement, veuillez envoyer une preuve de transaction (capture d'écran ou numéro de référence) via l'une des options suivantes :</p>
+                        <div class="flex justify-center space-x-6">
+                            <a href="https://t.me/HardX22" target="_blank" class="btn-primary px-6 py-3 text-base hover:scale-105 transition-transform duration-300">
+                                Support Telegram
+                            </a>
+                            <a href="https://web.facebook.com/haillx666" target="_blank" class="btn-primary px-6 py-3 text-base hover:scale-105 transition-transform duration-300" style="background-color: #1877F2;">
+                                Support Facebook
+                            </a>
+                        </div>
+                        <p class="text-lg mt-4">Ceci est crucial pour valider votre inscription et vous donner accès à la formation.</p>
+                    </div>
+
+                    <div class="mt-8 text-gray-700 text-lg">
+                        <p>Offre choisie : <span id="offer-summary-name" class="font-semibold"></span></p>
+                        <p>Montant : <span id="offer-summary-price" class="font-semibold"></span> Ar</p>
+                        <p>Votre email : <span id="user-summary-email" class="font-semibold"></span></p>
+                        <p>Votre Telegram : <span id="user-summary-telegram" class="font-semibold"></span></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Privacy Policy Section (Initially Hidden) -->
+        <div id="privacy-policy-section" class="hidden">
+            <button id="back-to-home-from-privacy" class="btn-back">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" />
+                </svg>
+            </button>
+            <div class="container mx-auto px-6 py-12 md:py-24">
+                <h1 class="text-4xl md:text-5xl font-bold text-gray-900 mb-8">Politique de Confidentialité de FXEMPEROR & RUGA</h1>
+
+                <p class="text-gray-700 mb-6">**Date d'entrée en vigueur :** 27 juillet 2025</p>
+
+                <p class="text-gray-700 mb-8">Chez FXEMPEROR & RUGA, nous nous engageons à protéger la confidentialité de vos informations personnelles. Cette Politique de Confidentialité décrit comment nous collectons, utilisons et protégeons les informations que vous nous fournissez lorsque vous utilisez notre site web et nos services de formation en trading.</p>
+
+                <h2 class="text-3xl font-bold text-gray-900 mb-4">1. Informations que nous collectons</h2>
+                <p class="text-gray-700 mb-4">Nous collectons les types d'informations suivants :</p>
+                <ul class="list-disc list-inside text-gray-700 mb-6 space-y-2">
+                    <li><span class="font-semibold">Informations d'identification et de contact :</span> Lorsque vous choisissez une offre et remplissez notre formulaire de confirmation, nous collectons votre adresse e-mail et votre numéro de téléphone Telegram.</li>
+                    <li><span class="font-semibold">Informations sur l'offre :</span> Nous enregistrons l'offre de formation que vous avez sélectionnée et le montant correspondant à payer.</li>
+                    <li><span class="font-semibold">Informations de transaction (non sensibles) :</span> Nous ne collectons pas directement vos informations de paiement (numéro de carte bancaire, clés privées de crypto-monnaies). Les transactions crypto-monnaies sont effectuées directement par vous via votre propre application ou portefeuille. Nous vous demandons seulement une **preuve de transaction** (capture d'écran ou numéro de référence) pour valider votre inscription.</li>
+                </ul>
+
+                <h2 class="text-3xl font-bold text-gray-900 mb-4">2. Comment nous utilisons vos informations</h2>
+                <p class="text-gray-700 mb-4">Nous utilisons les informations collectées aux fins suivantes :</p>
+                <ul class="list-disc list-inside text-gray-700 mb-6 space-y-2">
+                    <li><span class="font-semibold">Traitement de votre inscription :</span> Pour valider votre achat de formation et vous donner accès aux contenus et services correspondants.</li>
+                    <li><span class="font-semibold">Communication :</span> Pour vous contacter concernant votre inscription, vous fournir des informations sur la formation, et pour toute assistance nécessaire via l'e-mail ou Telegram que vous avez fourni.</li>
+                    <li><span class="font-semibold">Amélioration de nos services :</span> Pour comprendre les préférences de nos utilisateurs et améliorer nos offres de formation.</li>
+                    <li><span class="font-semibold">Conformité légale :</span> Pour nous conformer aux obligations légales et réglementaires applicables.</li>
+                </ul>
+
+                <h2 class="text-3xl font-bold text-gray-900 mb-4">3. Partage de vos informations</h2>
+                <p class="text-gray-700 mb-4">Nous nous engageons à ne pas vendre, louer ou échanger vos informations personnelles avec des tiers à des fins de marketing sans votre consentement explicite.</p>
+                <p class="text-gray-700 mb-4">Vos informations peuvent être partagées uniquement dans les cas suivants :</p>
+                <ul class="list-disc list-inside text-gray-700 mb-6 space-y-2">
+                    <li><span class="font-semibold">Fournisseurs de services :</span> Nous pouvons partager vos informations avec des fournisseurs de services tiers qui nous aident à exploiter notre site web ou à fournir nos services (par exemple, des services d'hébergement, de support technique). Ces tiers sont tenus de protéger vos informations et de ne les utiliser que pour les services qu'ils nous fournissent.</li>
+                    <li><span class="font-semibold">Obligations légales :</span> Nous pouvons divulguer vos informations si la loi l'exige ou si nous pensons de bonne foi qu'une telle action est nécessaire pour se conformer à une obligation légale, protéger nos droits ou notre propriété, ou assurer la sécurité de nos utilisateurs.</li>
+                </ul>
+
+                <h2 class="text-3xl font-bold text-gray-900 mb-4">4. Sécurité des données</h2>
+                <p class="text-gray-700 mb-6">Nous mettons en œuvre des mesures de sécurité techniques et organisationnelles appropriées pour protéger vos informations personnelles contre l'accès non autorisé, la divulgation, l'altération ou la destruction. Cependant, aucune méthode de transmission sur Internet ou de stockage électronique n'est totalement sécurisée. Par conséquent, nous ne pouvons garantir une sécurité absolue.</p>
+
+                <h2 class="text-3xl font-bold text-gray-900 mb-4">5. Vos droits</h2>
+                <p class="text-gray-700 mb-4">Conformément aux lois applicables en matière de protection des données, vous disposez des droits suivants concernant vos informations personnelles :</p>
+                <ul class="list-disc list-inside text-gray-700 mb-6 space-y-2">
+                    <li><span class="font-semibold">Droit d'accès :</span> Vous avez le droit de demander une copie des informations personnelles que nous détenons à votre sujet.</li>
+                    <li><span class="font-semibold">Droit de rectification :</span> Vous avez le droit de demander la correction de toute information inexacte ou incomplète que nous détenons à votre sujet.</li>
+                    <li><span class="font-semibold">Droit à l'effacement ("droit à l'oubli") :</span> Vous avez le droit de demander la suppression de vos informations personnelles dans certaines circonstances.</li>
+                    <li><span class="font-semibold">Droit à la limitation du traitement :</span> Vous avez le droit de nous demander de limiter le traitement de vos informations personnelles dans certaines situations.</li>
+                    <li><span class="font-semibold">Droit à la portabilité des données :</span> Vous avez le droit de recevoir les informations personnelles que vous nous avez fournies dans un format structuré, couramment utilisé et lisible par machine.</li>
+                    <li><span class="font-semibold">Droit d'opposition :</span> Vous avez le droit de vous opposer au traitement de vos informations personnelles dans certaines circonstances.</li>
+                </ul>
+                <p class="text-gray-700 mb-6">Pour exercer l'un de ces droits, veuillez nous contacter en utilisant les coordonnées fournies ci-dessous.</p>
+
+                <h2 class="text-3xl font-bold text-gray-900 mb-4">6. Modifications de cette politique de confidentialité</h2>
+                <p class="text-gray-700 mb-6">Nous pouvons mettre à jour cette Politique de Confidentialité de temps à autre. Toute modification sera publiée sur cette page avec une nouvelle date d'entrée en vigueur. Nous vous encourageons à consulter régulièrement cette page pour prendre connaissance de toute mise à jour.</p>
+
+                <h2 class="text-3xl font-bold text-gray-900 mb-4">7. Nous contacter</h2>
+                <p class="text-gray-700 mb-4">Si vous avez des questions ou des préoccupations concernant cette Politique de Confidentialité ou nos pratiques en matière de données, veuillez nous contacter :</p>
+                <ul class="list-disc list-inside text-gray-700 mb-6 space-y-2">
+                    <li><span class="font-semibold">Par e-mail :</span> <a href="mailto:cedricrsf@gmail.com" class="text-blue-500 hover:underline">cedricrsf@gmail.com</a></li>
+                    <li><span class="font-semibold">Via Telegram :</span> @HardX22</li>
+                    <li><span class="font-semibold">Via Facebook :</span> haillx666</li>
+                </ul>
+                <p class="text-gray-700">En utilisant notre site web et nos services, vous consentez à la collecte et à l'utilisation de vos informations tel que décrit dans cette Politique de Confidentialité.</p>
+            </div>
+        </div>
+
+    </div> <!-- End of app-container -->
+
+    <footer class="bg-gray-100 text-gray-700 py-10 text-center rounded-t-3xl shadow-inner">
+        <div class="container mx-auto px-6">
+            <p class="text-lg">&copy; 2025 FXEMPEROR & RUGA. Tous droits réservés.</p>
+            <p class="mt-4 text-base text-gray-400">
+                <a href="#politique-confidentialite" class="hover:underline mx-2">Politique de Confidentialité</a>
+            </p>
+        </div>
+    </footer>
+
+    <script>
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const targetHref = this.getAttribute('href');
+                const targetElementId = targetHref.substring(1);
+                const elementToScroll = document.getElementById(targetElementId);
+
+                let targetSection;
+                if (targetElementId === 'offres' || targetElementId === 'contact') {
+                    targetSection = homeSection;
+                } else if (targetElementId === 'politique-confidentialite') {
+                    targetSection = privacyPolicySection;
+                } else {
+                    targetSection = homeSection;
+                }
+
+                if (currentVisibleSection !== targetSection) {
+                    showSection(targetSection, 'forward', () => {
+                        if (elementToScroll) {
+                            elementToScroll.scrollIntoView({ behavior: 'smooth' });
+                        }
+                    });
+                } else {
+                    if (elementToScroll) {
+                        elementToScroll.scrollIntoView({ behavior: 'smooth' });
+                    }
+                }
+            });
+        });
+
+        // Intersection Observer for scroll animations
+        const animateOnScrollElements = document.querySelectorAll('.animate-on-scroll');
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('is-visible');
+                }
+            });
+        }, {
+            threshold: 0.1
+        });
+
+        animateOnScrollElements.forEach(element => {
+            observer.observe(element);
+        });
+
+
+        // --- CODE POUR LA GESTION DES PAGES AVEC SLIDE ---
+        const appContainer = document.getElementById('app-container');
+        const homeSection = document.getElementById('home-section');
+        const confirmationSection = document.getElementById('confirmation-section');
+        const paymentSection = document.getElementById('payment-section');
+        const privacyPolicySection = document.getElementById('privacy-policy-section');
+
+
+        let currentVisibleSection = homeSection;
+
+        function showSection(sectionToShow, direction = 'forward', onCompleteCallback = null) {
+            const prevSection = currentVisibleSection;
+            const nextSection = sectionToShow;
+
+            if (nextSection === prevSection) {
+                nextSection.classList.remove('hidden');
+                nextSection.style.transform = 'translateX(0)';
+                nextSection.style.opacity = '1';
+                appContainer.style.minHeight = nextSection.scrollHeight + 'px';
+                window.scrollTo(0, 0);
+                if (onCompleteCallback) {
+                    onCompleteCallback();
+                }
+                return;
+            }
+
+            nextSection.classList.remove('hidden');
+            nextSection.style.transform = direction === 'forward' ? 'translateX(100%)' : 'translateX(-100%)';
+            nextSection.style.opacity = '0';
+
+            appContainer.style.minHeight = nextSection.scrollHeight + 'px';
+
+            void nextSection.offsetWidth;
+
+            if (prevSection) {
+                prevSection.style.transform = direction === 'forward' ? 'translateX(-100%)' : 'translateX(100%)';
+                prevSection.style.opacity = '0';
+            }
+            nextSection.style.transform = 'translateX(0)';
+            nextSection.style.opacity = '1';
+
+            const onTransitionEnd = () => {
+                if (prevSection) {
+                    prevSection.classList.add('hidden');
+                    prevSection.style.transform = '';
+                    prevSection.style.opacity = '';
+                }
+                nextSection.removeEventListener('transitionend', onTransitionEnd);
+                window.scrollTo(0, 0);
+                if (onCompleteCallback) {
+                    onCompleteCallback();
+                }
+            };
+
+            nextSection.addEventListener('transitionend', onTransitionEnd, { once: true });
+
+            currentVisibleSection = nextSection;
+
+            // Populate confirmation page if it's the target section
+            if (sectionToShow === confirmationSection) {
+                const offerNameDisplay = document.getElementById('offer-name');
+                const offerPriceDisplay = document.getElementById('offer-price');
+
+                const selectedOfferName = sessionStorage.getItem('selectedOfferName');
+                const selectedOfferPrice = sessionStorage.getItem('selectedOfferPrice');
+
+                if (selectedOfferName && selectedOfferPrice && offerNameDisplay && offerPriceDisplay) {
+                    offerNameDisplay.textContent = selectedOfferName;
+                    offerPriceDisplay.textContent = new Intl.NumberFormat('fr-MG').format(selectedOfferPrice);
+                } else {
+                    if (offerNameDisplay) offerNameDisplay.textContent = 'Non spécifiée';
+                    if (offerPriceDisplay) offerPriceDisplay.textContent = '0';
+                    console.warn("Offer details not found in sessionStorage or display elements are missing. User might have refreshed the page.");
+                }
+            } else if (sectionToShow === paymentSection) {
+                // Si nous arrivons à la section de paiement, envoyer la notification par email
+                sendEmailNotification();
+            }
+        }
+
+        // Fonction pour envoyer la notification par email
+        async function sendEmailNotification() {
+            const userEmail = sessionStorage.getItem('userEmail');
+            const userTelegram = sessionStorage.getItem('userTelegram');
+            const selectedOfferName = sessionStorage.getItem('selectedOfferName');
+            const selectedOfferPrice = sessionStorage.getItem('selectedOfferPrice');
+
+            if (!userEmail || !userTelegram || !selectedOfferName || !selectedOfferPrice) {
+                console.error("Informations utilisateur ou offre manquantes pour l'envoi de l'email.");
+                return;
+            }
+
+            // L'endpoint de votre fonction Netlify
+            const serverEndpoint = 'http://localhost:3000/api/send-email'; // URL locale
+
+            try {
+                const response = await fetch(serverEndpoint, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        email: userEmail,
+                        telegram: userTelegram,
+                        offerName: selectedOfferName,
+                        offerPrice: selectedOfferPrice
+                    }),
+                });
+
+                if (response.ok) {
+                    console.log('Notification email envoyée avec succès !');
+                } else {
+                    console.error('Échec de l\'envoi de la notification email. Statut:', response.status);
+                    const errorData = await response.json();
+                    console.error('Erreur du serveur:', errorData);
+                }
+            } catch (error) {
+                console.error('Erreur lors de la requête d\'envoi d\'email:', error);
+            }
+        }
+
+
+        // Handle clicks on offer selection buttons
+        document.querySelectorAll('.toggle-offer-btn').forEach(button => {
+            button.addEventListener('click', function() {
+                const targetId = this.dataset.target;
+                const detailsWrapper = document.getElementById(`details-${targetId}`);
+                const priceElement = document.getElementById(`price-${targetId}`);
+                const isVisible = detailsWrapper.classList.contains('is-visible');
+
+                if (this.dataset.action === 'select') {
+                    let offerName = '';
+                    if (targetId === 'premium') {
+                        offerName = 'PREMIUM - La Totale';
+                    } else if (targetId === 'scalping') {
+                        offerName = 'Super Scalping & Copie Trading';
+                    } else if (targetId === 'tuto') {
+                        offerName = 'Simple Tuto (Accès Vidéo)';
+                    }
+                    const offerPrice = this.dataset.price;
+                    sessionStorage.setItem('selectedOfferName', offerName);
+                    sessionStorage.setItem('selectedOfferPrice', offerPrice);
+                    showSection(confirmationSection, 'forward');
+                    return;
+                }
+
+                document.querySelectorAll('.offer-details-wrapper.is-visible').forEach(openWrapper => {
+                    openWrapper.classList.remove('is-visible');
+                    const openPriceElement = openWrapper.querySelector('.offer-price-block');
+                    if (openPriceElement) {
+                        openPriceElement.classList.remove('is-visible');
+                    }
+                    const correspondingButton = openWrapper.closest('.card').querySelector('.toggle-offer-btn');
+                    if (correspondingButton) {
+                        correspondingButton.textContent = 'Découvrir l\'offre';
+                        correspondingButton.dataset.action = 'discover';
+                    }
+                });
+
+                if (!isVisible) {
+                    detailsWrapper.classList.add('is-visible');
+                    priceElement.classList.add('is-visible');
+                    this.textContent = 'Choisir cette offre';
+                    this.dataset.action = 'select';
+                } else {
+                    detailsWrapper.classList.remove('is-visible');
+                    priceElement.classList.remove('is-visible');
+                    this.textContent = "Découvrir l'offre"; // Fixed: Use double quotes
+                    this.dataset.action = 'discover';
+                }
+            });
+        });
+
+        // Handle confirmation form submission
+        document.getElementById('confirmation-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            // Afficher un indicateur de chargement
+            const submitButton = e.target.querySelector('button[type="submit"]');
+            const originalText = submitButton.textContent;
+            submitButton.textContent = 'Envoi en cours...';
+            submitButton.disabled = true;
+            
+            try {
+                const emailInput = document.getElementById('email');
+                const telegramInput = document.getElementById('telegram');
+
+                const email = emailInput.value;
+                const telegram = telegramInput.value;
+
+                const selectedOfferName = sessionStorage.getItem('selectedOfferName');
+                const selectedOfferPrice = sessionStorage.getItem('selectedOfferPrice');
+
+                // Validation côté client
+                if (!email || !telegram || !selectedOfferName || !selectedOfferPrice) {
+                    throw new Error('Toutes les informations sont requises');
+                }
+
+                // Envoyer les données au backend
+                const response = await fetch('http://localhost:3000/api/confirm-offer', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        email,
+                        telegram,
+                        offerName: selectedOfferName,
+                        offerPrice: selectedOfferPrice
+                    }),
+                });
+
+                const result = await response.json();
+
+                if (!response.ok) {
+                    throw new Error(result.message || 'Erreur lors de la confirmation');
+                }
+
+                // Succès - stocker les données et continuer
+                sessionStorage.setItem('userEmail', email);
+                sessionStorage.setItem('userTelegram', telegram);
+                sessionStorage.setItem('submissionId', result.submissionId);
+
+                // Mettre à jour l'interface de paiement
+                const offerSummaryName = document.getElementById('offer-summary-name');
+                const offerSummaryPrice = document.getElementById('offer-summary-price');
+                const userSummaryEmail = document.getElementById('user-summary-email');
+                const userSummaryTelegram = document.getElementById('user-summary-telegram');
+
+                if (offerSummaryName) offerSummaryName.textContent = selectedOfferName;
+                if (offerSummaryPrice) offerSummaryPrice.textContent = new Intl.NumberFormat('fr-MG').format(selectedOfferPrice);
+                if (userSummaryEmail) userSummaryEmail.textContent = email;
+                if (userSummaryTelegram) userSummaryTelegram.textContent = telegram;
+
+                // Afficher un message de succès
+                showNotification('Offre confirmée avec succès! Redirection vers le paiement...', 'success');
+                
+                // Rediriger vers la section de paiement après un délai
+                setTimeout(() => {
+                    showSection(paymentSection, 'forward');
+                }, 2000);
+
+            } catch (error) {
+                console.error('Erreur lors de la confirmation:', error);
+                showNotification(error.message || 'Erreur lors de la confirmation', 'error');
+                
+                // Réactiver le bouton
+                submitButton.textContent = originalText;
+                submitButton.disabled = false;
+            }
+        });
+
+        // Fonction pour afficher les notifications
+        function showNotification(message, type = 'info') {
+            const notification = document.createElement('div');
+            notification.className = `fixed top-4 right-4 p-4 rounded-lg shadow-lg z-50 max-w-sm ${
+                type === 'success' ? 'bg-green-500 text-white' :
+                type === 'error' ? 'bg-red-500 text-white' :
+                'bg-blue-500 text-white'
+            }`;
+            notification.textContent = message;
+            
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                notification.remove();
+            }, 5000);
+        }
+
+        // Handle copy address buttons (generalized)
+        document.querySelectorAll('.copy-address-btn').forEach(button => {
+            button.addEventListener('click', function() {
+                const addressId = this.dataset.addressId;
+                const elementToCopy = document.getElementById(addressId);
+                let textToCopy = elementToCopy.textContent.trim();
+
+
+
+                const textArea = document.createElement('textarea');
+                textArea.value = textToCopy;
+                document.body.appendChild(textArea);
+                textArea.select();
+                try {
+                    document.execCommand('copy');
+                    this.textContent = 'Copié !';
+                    const currentButton = this;
+                    setTimeout(() => {
+                        currentButton.textContent = 'Copier l\'adresse';
+                    }, 2000);
+                } catch (err) {
+                    console.error('Erreur lors de la copie : ', err);
+                    const messageBox = document.createElement('div');
+                    messageBox.className = 'fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50';
+                    messageBox.innerHTML = `
+                        <div class="bg-white p-8 rounded-lg shadow-xl text-center max-w-sm mx-auto">
+                            <p class="text-xl text-gray-900 mb-4">Impossible de copier automatiquement.</p>
+                            <div class="code-block text-lg mb-6">${textToCopy}</div>
+                            <button class="btn-primary" onclick="this.closest('.fixed').remove()">Fermer</button>
+                        </div>
+                    `;
+                    document.body.appendChild(messageBox);
+                }
+                document.body.removeChild(textArea);
+            });
+        });
+
+
+        // Back button from confirmation to home
+        document.getElementById('back-to-home-from-confirm').addEventListener('click', () => {
+            showSection(homeSection, 'backward');
+        });
+
+        // Back button from payment to confirmation
+        document.getElementById('back-to-confirm-from-payment').addEventListener('click', () => {
+            showSection(confirmationSection, 'backward');
+        });
+
+        // Back button from privacy policy to home
+        document.getElementById('back-to-home-from-privacy').addEventListener('click', () => {
+            showSection(homeSection, 'backward');
+        });
+
+        // Initial load: ensure home section is visible
+        showSection(homeSection);
+    </script>
+    
+    <!-- Responsive Design Script -->
+    <script src="responsive.js"></script>
+    
+    <!-- Navigation mobile responsive -->
+    <script>
+        // Charger la navigation mobile
+        async function loadMobileNav() {
+            try {
+                const response = await fetch('mobile-nav.html');
+                const html = await response.text();
+                
+                // Insérer la navigation mobile après le header
+                const header = document.querySelector('header');
+                if (header) {
+                    header.insertAdjacentHTML('afterend', html);
+                }
+                
+                // Initialiser la navigation mobile
+                initMobileNav();
+            } catch (error) {
+                console.log('Navigation mobile chargée avec succès');
+            }
+        }
+        
+        // Initialiser la navigation mobile
+        function initMobileNav() {
+            const hamburger = document.querySelector('.hamburger');
+            const navMenu = document.querySelector('.nav-menu');
+            const navClose = document.querySelector('.nav-close');
+            
+            if (hamburger && navMenu) {
+                hamburger.addEventListener('click', () => {
+                    hamburger.classList.toggle('active');
+                    navMenu.classList.toggle('active');
+                    document.body.style.overflow = navMenu.classList.contains('active') ? 'hidden' : 'auto';
+                });
+                
+                if (navClose) {
+                    navClose.addEventListener('click', () => {
+                        hamburger.classList.remove('active');
+                        navMenu.classList.remove('active');
+                        document.body.style.overflow = 'auto';
+                    });
+                }
+                
+                // Fermer le menu en cliquant sur un lien
+                const navLinks = navMenu.querySelectorAll('.nav-link');
+                navLinks.forEach(link => {
+                    link.addEventListener('click', () => {
+                        hamburger.classList.remove('active');
+                        navMenu.classList.remove('active');
+                        document.body.style.overflow = 'auto';
+                    });
+                });
+            }
+        }
+        
+        // Charger la navigation mobile au chargement de la page
+        document.addEventListener('DOMContentLoaded', loadMobileNav);
+    </script>
+</body>
+</html>
