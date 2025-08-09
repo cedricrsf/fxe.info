@@ -1,7 +1,7 @@
 // Configuration pour les emails FXEMPEROR & RUGA
 module.exports = {
     // Adresse email de notification
-    NOTIFICATION_EMAIL: 'rasolofofoarijaonacedric30@gmail.com',
+    NOTIFICATION_EMAIL: 'rasolofoarijaonacedric30@gmail.com',
     
     // Configuration Gmail
     GMAIL_CONFIG: {

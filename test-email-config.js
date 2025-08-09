@@ -38,7 +38,7 @@ if (!process.env.EMAIL_USER || !process.env.EMAIL_PASS) {
     
     const testEmail = {
         from: process.env.EMAIL_USER,
-        to: 'rasolofofoarijaonacedric30@gmail.com',
+        to: 'rasolofoarijaonacedric30@gmail.com',
         subject: '🧪 Test email FXEMPEROR & RUGA',
         html: `
             <h2>🧪 Test de configuration email</h2>
